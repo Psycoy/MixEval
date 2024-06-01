@@ -1,0 +1,4 @@
+*.egg-info
+/scripts/
+/mix_eval/data/test/
+/mix_eval/eval_scripts
