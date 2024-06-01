@@ -22,12 +22,12 @@
 
 
 # MixEval
-We introduce MixEval, a ground-truth-based dynamic benchmark derived from off-the-shelf benchmark mixtures, which evaluates LLMs with a highly capable model ranking (i.e., 0.96 correlation with Chatbot Arena) while running locally and quickly (6% the time and cost of running MMLU), with its queries being stably and effortlessly updated every month to avoid contamination.
+We introduce **MixEval**, a ground-truth-based dynamic benchmark derived from off-the-shelf benchmark mixtures, which evaluates LLMs with a highly capable model ranking (i.e., 0.96 correlation with Chatbot Arena) while running locally and quickly (6% the time and cost of running MMLU), with its queries being stably and effortlessly updated every month to avoid contamination.
 
-The MixEval consists of two benchmarks: `MixEval` and `MixEval-Hard`, both updated with our fast, stable pipeline periodically. Both of them contain two splits, i.e., free-form and multiple-choice. Their relationships are presented below:
+The **MixEval** consists of two benchmarks: `MixEval` and `MixEval-Hard`, both updated with our fast, stable pipeline periodically. Both of them contain two splits, i.e., free-form and multiple-choice. Their relationships are presented below:
 
 ```
-└── MixEval
+ MixEval (dynamic)
     │
     ├── MixEval
     │   ├──free-form.json
