@@ -163,7 +163,7 @@ If you want to separately compute the scores, you should
 
 # What is MixEval?
 
-> See our [homepage](https://mixeval.github.io/) and [paper] for more details!
+> See our [homepage](https://mixeval.github.io/) and [paper]() for more details!
 
 **MixEval** is an approach that bridges the gap between real-world user queries and efficient, reproducible evaluation by leveraging user queries mined from the web and matching them with similar queries from existing benchmarks. **MixEval** is also the proposed benchmark built with this approach.
 
