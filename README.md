@@ -71,7 +71,7 @@ MODEL_PARSER_API=<your openai api key>
 **(Step 3)** Run evaluation and get results. That's all!
 ```
 python -m mix_eval.evaluate \
-    --model_name llama_3_8b_instruct \
+    --model_name gemma_11_7b_instruct \
     --benchmark mixeval_hard \
     --version 2024-06-01 \
     --batch_size 20 \
@@ -84,7 +84,7 @@ python -m mix_eval.evaluate \
 
 > This command will run both inference and score computation. If you want to run model inference only, check [here](#only-performing-model-inference); if you want to run score computation only, check [here](#only-computing-scores).
 
-> Model response files and scores will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this case, it's `mix_eval/data/model_responses/llama_3_8b_instruct/mixeval_hard/2024-06-01/`. We take the `overall score` as the reported score in [Leaderboard](https://mixeval.github.io/#leaderboard).
+> Model response files and scores will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this case, it's `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`. We take the `overall score` as the reported score in [Leaderboard](https://mixeval.github.io/#leaderboard).
 
 > **ATTENTION❗** It's important to read the essential configurations [here](docs/evaluate_instructions.md) before running the evaluation.
 
@@ -108,7 +108,7 @@ python -m mix_eval.evaluate \
 Sometimes you may want to do model inference without computing the scores. You can achieve this by setting the `--inference_only` flag when running the `mix_eval.evaluate` module:
 ```
 python -m mix_eval.evaluate \
-    --model_name llama_3_8b_instruct \
+    --model_name gemma_11_7b_instruct \
     --benchmark mixeval_hard \
     --version 2024-06-01 \
     --batch_size 20 \
@@ -116,7 +116,7 @@ python -m mix_eval.evaluate \
     --output_folder mix_eval/data/model_responses/ \
     --inference_only
 ```
-> Model response files will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this example it's `mix_eval/data/model_responses/llama_3_8b_instruct/mixeval_hard/2024-06-01/`.
+> Model response files will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this example it's `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`.
 
 > **ATTENTION❗** It's important to read the essential configurations [here](docs/evaluate_instructions.md) before running the evaluation.
 
@@ -149,7 +149,7 @@ If you want to separately compute the scores, you should
         --model_response_dir mix_eval/data/model_responses/ \
         --api_parallel_num 20 \
         --models_to_eval \
-        llama_3_8b_instruct \
+        gemma_11_7b_instruct \
         gpt_4o \
         claude_3_opus
     ```
@@ -179,7 +179,7 @@ MixEval offers five significant advantages for practitioners:
 - **Fast**, **cheap** and **reproducible** execution, requiring only 6% the time and cost of MMLU and with no dependence on human input.
 - **Dynamic** benchmarking enabled by low-effort and stable updating mechanism.
 - A **comprehensive** and **less biased** query distribution, as it bases queries on a large-scale web corpus.
-- A **fair** scoring process, ensured by the ground-truth-based scoring mechanism.
+- A **fair** grading process, ensured by the ground-truth-based grading mechanism.
 
 <br>
 

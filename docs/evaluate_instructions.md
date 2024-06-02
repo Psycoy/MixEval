@@ -4,9 +4,9 @@
 
 2. `--api_parallel_num` specifies the number of parallel calls to the model parser api. In general, if you are a Tier-5 user, you can set `--api_parallel_num` to 100 or more to parse results in **30 seconds**.
 
-3. You can use `--max_gpu_memory` to specify the maximum memory per GPU for storing model weights. This allows it to allocate more memory for activations, so you can use longer context lengths or larger `batch_size`. E.g., with 4 GPUs, we can set `--max_gpu_memory 5GiB` for `llama_3_8b_instruct`.
+3. You can use `--max_gpu_memory` to specify the maximum memory per GPU for storing model weights. This allows it to allocate more memory for activations, so you can use longer context lengths or larger `batch_size`. E.g., with 4 GPUs, we can set `--max_gpu_memory 5GiB` for `gemma_11_7b_instruct`.
 
-4. Model response files and scores will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, for example, `mix_eval/data/model_responses/llama_3_8b_instruct/mixeval_hard/2024-06-01/`. We take the `overall score` as the reported score in [Leaderboard](https://mixeval.github.io/#leaderboard).
+4. Model response files and scores will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, for example, `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`. We take the `overall score` as the reported score in [Leaderboard](https://mixeval.github.io/#leaderboard).
 
 5. There is a resuming mechanism, which means that if you run evaluation with the same config as the run you want to resume, it will resume from where it stopped last time.
 
