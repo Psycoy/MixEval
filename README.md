@@ -1,7 +1,7 @@
 <p align="center" width="100%">
 <img src="resources/imgs/header.png"  width="100%" height="100%">
 </p>
-<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="">📜 arXiv</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="">🤗 HF Paper</a> | <a href="">𝕏 Twitter</a></p>
+<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="https://github.com/Psycoy/MixEval/blob/main/resources/paper/mixeval.pdf">📜 Paper</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="">🤗 HF Paper (coming soon)</a> | <a href="">𝕏 Twitter</a></p>
 </p>
 
 ---
@@ -38,14 +38,14 @@ The **MixEval** consists of two benchmarks: `MixEval` and `MixEval-Hard`, both u
         └──multiple-choice.json
 ```
 
-> See our [homepage](https://mixeval.github.io/) and [paper]() for more details!
+> See our [homepage](https://mixeval.github.io/) and [paper](https://github.com/Psycoy/MixEval/blob/main/resources/paper/mixeval.pdf) for more details!
 
 <br>
 
 # Click-and-Go LLM Evaluation Suite
 This repository hosts the evaluation code and dynamic data release for **MixEval**. The current dynamic benchmark version is displayed at the top of this page. We offer a reliable click-and-go evaluation suite compatible with both **open-source** and **proprietary** models, which includes model response generation and score computation. Additionally, this evaluation suite facilitates straightforward registration of custom models and benchmark data.
 
-> As demonstrated in the [paper](), traditional rule-based parsers exhibit significant instability and are prone to considerable errors. We employ either `GPT-3.5-Turbo` or open-source models as our model parser, which has been proven stable in [our]() and [this](https://arxiv.org/pdf/2404.01258) study. 
+> As demonstrated in the [paper](https://github.com/Psycoy/MixEval/blob/main/resources/paper/mixeval.pdf), traditional rule-based parsers exhibit significant instability and are prone to considerable errors. We employ either `GPT-3.5-Turbo` or open-source models as our model parser, which has been proven stable in [our]() and [this](https://arxiv.org/pdf/2404.01258) study. 
 
 **ATTENTION❗** Feel free to use your own evaluation code to evaluate with MixEval data. We provide the guidelines [here](docs/how_to_use_your_own_eval_code.md).
 
@@ -163,7 +163,7 @@ If you want to separately compute the scores, you should
 
 # What is MixEval?
 
-> See our [homepage](https://mixeval.github.io/) and [paper]() for more details!
+> See our [homepage](https://mixeval.github.io/) and [paper](https://github.com/Psycoy/MixEval/blob/main/resources/paper/mixeval.pdf) for more details!
 
 **MixEval** is an approach that bridges the gap between real-world user queries and efficient, reproducible evaluation by leveraging user queries mined from the web and matching them with similar queries from existing benchmarks. **MixEval** is also the proposed benchmark built with this approach.
 
