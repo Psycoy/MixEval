@@ -124,6 +124,7 @@ AVAILABLE_MODELS = {
     
     "qwen_7b_chat": "Qwen_7B_Chat",
     "qwen_15_18b_chat": "Qwen_15_18B_Chat",
+    "qwen_2_7b_instruct": "Qwen_2_7B_Instruct",
     
     "notus_7b_v1": "Notus_7B_V1",
     
