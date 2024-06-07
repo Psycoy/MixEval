@@ -118,12 +118,19 @@ def compute_metric_closeended_freeform_modelparse_from_judgefile(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
-    
+
     for model in models:
         print(f"Parsing model: {model}")
         score_dict_model = {}
@@ -158,10 +165,17 @@ def compute_metric_closeended_freeform_ruleparse_from_judgefile(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
     
     for model in models:
@@ -198,11 +212,19 @@ def compute_metric_closeended_multichoice_modelparse_from_judgefile(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+            
     
     for model in models:
         print(f"Parsing model: {model}")
@@ -248,10 +270,17 @@ def compute_metric_closeended_multichoice_ruleparse_from_judgefile(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
     
     for model in models:
@@ -295,11 +324,19 @@ def compute_metric_closeended_freeform_modelparse(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+            
     
     for model in models:
         print(f"\n\n\nParsing model: {model}\n\n\n")
@@ -366,12 +403,19 @@ def compute_metric_closeended_freeform_ruleparse(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
-        
+
     for model in tqdm(models):
         if args.extract_base_model_response:
             args.model_type = mix_eval.api.registry.get_model(model).__bases__[0].__name__
@@ -450,10 +494,17 @@ def compute_metric_closeended_multichoice_modelparse(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
         
     for model in models:
@@ -550,12 +601,19 @@ def compute_metric_closeended_multichoice_ruleparse(args):
     score_dict = {}
     if args.models_to_eval is not None:
         models = args.models_to_eval
+        for model in models:
+            if not model in AVAILABLE_MODELS.keys():
+                print(f"Model {model} is not available in the registry.")
         models = [model for model in models if model in AVAILABLE_MODELS.keys()]
+        
     else:
         if os.path.exists(args.model_response_dir):
             models = os.listdir(args.model_response_dir)
+            for model in models:
+                if not model in AVAILABLE_MODELS.keys():
+                    print(f"Model {model} is not available in the registry.")
             models = [model for model in models if model in AVAILABLE_MODELS.keys()]
-        
+            
     for model in tqdm(models):
         if args.extract_base_model_response:
             args.model_type = mix_eval.api.registry.get_model(model).__bases__[0].__name__
