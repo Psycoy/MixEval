@@ -46,7 +46,7 @@ def read_status(args):
     with open(status_path, 'r') as f:
         return json.load(f)
     
-def dict_equal(dict1, dict2, keys_to_ignore=['resume', 'compute_score_from_judged_file']):
+def dict_equal(dict1, dict2, keys_to_ignore=['resume', 'compute_score_from_judged_file', 'inference_only']):
     modified_dict1 = dict1.copy()
     modified_dict2 = dict2.copy()
     for key in keys_to_ignore:

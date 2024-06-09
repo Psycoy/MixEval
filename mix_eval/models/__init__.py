@@ -23,6 +23,8 @@ AVAILABLE_MODELS = {
     "qwen_15_110b_chat": "Qwen_15_110B_Chat",
     "qwen_15_moe_a27b_chat": "Qwen_15_MoE_A27B_Chat",
     "qwen_max_0428": "Qwen_Max_0428",
+    "qwen_2_7b_instruct": "Qwen_2_7B_Instruct",
+    "qwen_2_72b_instruct": "Qwen_2_72B_Instruct",
     
     "yi_6b": "Yi_6B",
     "yi_34b": "Yi_34B",
@@ -124,7 +126,6 @@ AVAILABLE_MODELS = {
     
     "qwen_7b_chat": "Qwen_7B_Chat",
     "qwen_15_18b_chat": "Qwen_15_18B_Chat",
-    "qwen_2_7b_instruct": "Qwen_2_7B_Instruct",
     
     "notus_7b_v1": "Notus_7B_V1",
     
