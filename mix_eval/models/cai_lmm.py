@@ -9,7 +9,7 @@ from mix_eval.api.registry import register_model
 class CAI_LMM(ChatModel):
     def __init__(self, args):
         super().__init__(args)
-        url = "https://c6b06d978ef621e003.gradio.live/"
+        url = "http://127.0.0.1:10051"
         self.client = Client(url)
 
     def cleanup_res(self, response):

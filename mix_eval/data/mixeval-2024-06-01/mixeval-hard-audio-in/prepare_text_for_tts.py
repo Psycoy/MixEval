@@ -61,12 +61,19 @@ if __name__ == "__main__":
         text = text.replace("(B)", "")
         text = text.replace("(C)", "")
         text = text.replace("(D)", "")
+        text = text.replace("(E)", "")
+        text = text.replace("(F)", "")
         text = text.split("\n")
         print(text)
         print("-----")
         sentences = []
         for t in text:
-            sentences.extend(split_long_sentences(t))
+            t = t.strip()
+            if t[:3] in ["A. ", "B. ", "C. ", "D. ", "E. ", "F. "]:
+                sentences.extend(t[:1])
+                sentences.extend(split_long_sentences(t[3:]))
+            else:
+                sentences.extend(split_long_sentences(t))
         max_len = 0
         for s in sentences:
             print(s)

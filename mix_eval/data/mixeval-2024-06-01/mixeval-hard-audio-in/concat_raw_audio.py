@@ -16,12 +16,12 @@ def concat_raw_audio(audio_files, output_file):
 
 
 if __name__ == "__main__":
-    met_file = "/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/close_freeform_hard_for_tts.json"
+    met_file = "/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/close_multichoice_hard_for_tts.json"
     with open(met_file, "r") as f:
         meta_data = json.load(f)
 
     all_audio_files = glob.glob(
-        "/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen/raw/*.wav"
+        "/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen_mc/raw/*.wav"
     )
     all_audio_files = sorted(all_audio_files)
     assert len(meta_data) == len(all_audio_files), (
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     for name in q_to_audios:
         print(name, q_to_audios[name], len(all_audio_files))
         audio_files = [all_audio_files[i] for i in q_to_audios[name]]
-        output_file = f"/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen/{name}.wav"
+        output_file = f"/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen_mc/{name}.wav"
         concat_raw_audio(audio_files, output_file)
 
     orig_file = "/home/qiantong/MixEval/mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/gemma_11_7b_instruct_close_freeform_hard.jsonl"
@@ -55,8 +55,8 @@ if __name__ == "__main__":
                 continue
 
             d["audio_files"] = [
-                f"/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen/{i}_male-ll.wav",
-                f"/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen/{i}_female-ll.wav",
+                f"/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen_mc/{i}_male-ll.wav",
+                f"/home/qiantong/MixEval/mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio_gen_mc/{i}_female-ll.wav",
             ]
             del d["response"]
             f.write(json.dumps(d) + "\n")
