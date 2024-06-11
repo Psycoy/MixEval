@@ -133,7 +133,9 @@ def parse_multi_choice_response_model(args, tasks):
             
     if len(tasks_remained) > 0:
         print(f"Max retry number {MAX_RETRY_NUM} reached, while some tasks are still not judged. "
-              "Randomly assign the options for them.")
+              "Randomly assign the options for them.\n"
+              "This is expected during parsing. "
+              "The main cause may be that the evaluated model's response does not contain a valid answer.")
         # randomly assign the option for each entry
         for task in tasks_remained:
             options = task['options']
@@ -308,7 +310,9 @@ def parse_freeform_response_model(args, tasks):
     if len(tasks_remained) > 0:
         print(f"Max retry number {MAX_RETRY_NUM} reached, "
               "while some tasks are still not judged. "
-              "Randomly assign the scores for them.")
+              "Randomly assign the scores for them.\n"
+              "This is expected during parsing. "
+              "The main cause may be that the evaluated model's response does not contain a valid answer.")
         # randomly assign the score for each entry
         for task in tasks_remained:
             task['judge_score'] = round(random.random(), 1)
