@@ -15,6 +15,7 @@ import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import time
 import warnings
+from tqdm import tqdm
 warnings.simplefilter("ignore", category=DeprecationWarning)
 warnings.simplefilter("ignore", category=FutureWarning)
 
@@ -188,7 +189,7 @@ def _eval(args):
         collate_fn=lambda x: x
         )
     
-    for b_id, batch in enumerate(dataloader):
+    for b_id, batch in enumerate(tqdm(dataloader, desc="Evaluating batches", unit="batch")):
         if resume:
             if status['status']['batch_id'] >= b_id:
                 continue
