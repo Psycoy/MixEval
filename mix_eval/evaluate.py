@@ -45,7 +45,7 @@ def parse_args():
         "--benchmark", 
         type=str, 
         required=True, 
-        choices=["mixeval", "mixeval_hard"], 
+        choices=["mixeval", "mixeval_hard", "mixeval_hard_audio"], 
         help="Benchmark to evaluate."
         )
     parser.add_argument(
@@ -232,6 +232,9 @@ def eval(args):
         args.split = "close_freeform_hard"
         _eval(args)
         args.split = "close_multichoice_hard"
+        _eval(args)
+    elif args.benchmark == "mixeval_hard_audio":
+        args.split = "audio_close_freeform_hard"
         _eval(args)
     else:
         raise ValueError(f"Benchmark {args.benchmark} not supported.")

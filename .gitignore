@@ -1,4 +1,7 @@
 *.egg-info
+**/__pycache__/
+**/**/__pycache__/
 /scripts/
 /mix_eval/data/test/
+mix_eval/data/mixeval-2024-06-01/mixeval-hard-audio-in/audio*
 /mix_eval/eval_scripts
