@@ -64,8 +64,8 @@ AVAILABLE_MODELS = {
     "olmo_7b": "OLMo_7B",
     "olmo_7b_instruct": "OLMo_7B_Instruct",
     
-    "jet_moe": "JetMoE",
-    "jet_moe_chat": "JetMoE_Chat",
+    # "jet_moe": "JetMoE",
+    # "jet_moe_chat": "JetMoE_Chat",
     
     "mpt_7b": "MPT_7B",
     "mpt_30b": "MPT_30B",

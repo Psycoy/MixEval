@@ -1,6 +1,9 @@
+# refer to https://github.com/myshell-ai/JetMoE to install jetmoe
+# pip install https://github.com/myshell-ai/JetMoE.git
+# from jetmoe import JetMoEForCausalLM, JetMoEConfig, JetMoEForSequenceClassification
+
 import torch
 from transformers import AutoModelForCausalLM, AutoConfig, AutoModelForSequenceClassification
-from jetmoe import JetMoEForCausalLM, JetMoEConfig, JetMoEForSequenceClassification
 
 from mix_eval.models.base import ChatModel
 from mix_eval.api.registry import register_model
