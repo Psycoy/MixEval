@@ -1,7 +1,7 @@
 <p align="center" width="100%">
 <img src="resources/imgs/header.png"  width="100%" height="100%">
 </p>
-<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="https://arxiv.org/abs/2406.06565">📜 Paper</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="https://huggingface.co/papers/2406.06565">🤗 HF Paper</a> | <a href="https://x.com/NiJinjie/status/1798182749049852411">𝕏 Twitter</a></p>
+<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="https://arxiv.org/abs/2406.06565">📜 arXiv</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="https://huggingface.co/papers/2406.06565">🤗 HF Paper</a> | <a href="https://x.com/NiJinjie/status/1798182749049852411">𝕏 Twitter</a></p>
 </p>
 
 ---
