@@ -67,5 +67,5 @@ Feel free to use your own evaluation code to evaluate with MixEval data. To help
     ...
 ]
 ```
-1. The difference between model input (the benchmark data) and output (the model response file) is just the `"response"` field, i.e., each entry in your output file should keep all key-value pairs (including the 'id') of the input entry, with an additional `"response"` field representing the model's output.
-2. The example model output files can be found under `mix_eval/data/model_responses/gemma_11_7b_instruct/`.
+1. You should prepare the model response files under `mix_eval/data/model_responses/`. As an example, you can refer to the file structure of `mix_eval/data/model_responses/gemma_11_7b_instruct/`.
+2. The difference between model input (the benchmark data) and output (the model response file) is just the `"response"` field, i.e., each entry in your output file should keep all key-value pairs (including the 'id') of the input entry, with an additional `"response"` field representing the model's output.
