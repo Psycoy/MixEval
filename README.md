@@ -47,7 +47,7 @@ This repository hosts the evaluation code and dynamic data release for **MixEval
 
 > As demonstrated in the [paper](https://arxiv.org/abs/2406.06565), traditional rule-based parsers exhibit significant instability and are prone to considerable errors. We employ either `GPT-3.5-Turbo` or open-source models as our model parser, which has been proven stable in [our]() and [this](https://arxiv.org/pdf/2404.01258) study. 
 
-**ATTENTION❗** Feel free to use your own evaluation code to evaluate with MixEval data. We provide the guidelines [here](docs/how_to_use_your_own_eval_code.md).
+**ATTENTION❗ Feel free to use your own evaluation code to evaluate with MixEval data. We provide the guidelines [here](docs/how_to_use_your_own_eval_code.md).**
 
 <br>
 
