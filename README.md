@@ -204,9 +204,9 @@ If you found this repository useful, please consider 📑**citing**:
 
 ```
 @article{ni2024mixeval,
-        title={MixEval: Deriving Wisdom of the Crowd from LLM Benchmark Mixtures},
-        author={Jinjie Ni and Fuzhao Xue and Xiang Yue and Yuntian Deng and Mahir Shah and Kabir Jain and Graham Neubig and Yang You},
-        journal={arXiv preprint arXiv:[placeholder]},
-        year={2024}
-      },
+  title={MixEval: Deriving Wisdom of the Crowd from LLM Benchmark Mixtures},
+  author={Ni, Jinjie and Xue, Fuzhao and Yue, Xiang and Deng, Yuntian and Shah, Mahir and Jain, Kabir and Neubig, Graham and You, Yang},
+  journal={arXiv preprint arXiv:2406.06565},
+  year={2024}
+}
 ```
