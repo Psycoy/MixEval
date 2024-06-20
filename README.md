@@ -140,7 +140,7 @@ python -m mix_eval.utils.check_eval_complete \
 
 # Only Computing Scores
 If you want to separately compute the scores, you should 
-1. **Prepare your model response files.** You can use either our evaluation suite (refer to [here](#new-model-registration)) or your own (refer to the example response file formats and protocols specified [here](docs/how_to_use_your_own_eval_code.md)).
+1. **Prepare your model response files.** You can use either our evaluation suite (refer to [here](#only-performing-model-inference)) or your own (refer to the example response file formats and protocols specified [here](docs/how_to_use_your_own_eval_code.md)).
 2. **Run the score computation script**:
     ```
     python -m mix_eval.compute_metrics \
