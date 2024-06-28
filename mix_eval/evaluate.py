@@ -20,7 +20,7 @@ warnings.simplefilter("ignore", category=DeprecationWarning)
 warnings.simplefilter("ignore", category=FutureWarning)
 
 from torch.utils.data import DataLoader
-
+from huggingface_hub import snapshot_download
 import mix_eval.api.registry
 from mix_eval.models import AVAILABLE_MODELS
 from mix_eval.utils.dataset import get_eval_dataset
@@ -158,6 +158,7 @@ def _eval(args):
         args.version,
         f"{args.model_name}_{args.split}.jsonl"
         )
+    
     os.makedirs(
         os.path.dirname(response_file), 
         exist_ok=True
@@ -245,8 +246,17 @@ def eval(args):
         raise ValueError(f"Benchmark {args.benchmark} not supported.")
 
 if __name__ == '__main__':
+    start_time = time.time()
     set_seed()
     args = parse_args()
+    
+    # check wether dataset is local remote
+    if args.data_path.startswith("hf://"):
+        print("Downloading dataset from Hugging Face Hub.")
+        new_path = snapshot_download(repo_id=args.data_path.split("hf://")[1], repo_type="dataset")
+        print(f"Downloaded dataset to {new_path}")
+        args.data_path = new_path
+    
     try:
         eval(args)
         if not args.inference_only:
@@ -258,4 +268,4 @@ if __name__ == '__main__':
         f"{args.benchmark}/{args.version}/{args.model_name}.log")
         log_error(msg, f"{args.output_dir}/error.log")
         raise e
-    
+    print(f"Total time: {time.time() - start_time}")    
