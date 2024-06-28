@@ -43,6 +43,13 @@ def parse_args():
         help="Model to evaluate."
         )
     parser.add_argument(
+        "--model_path", 
+        type=str, 
+        required=False, 
+        default=None,
+        help="Path to local model, only work with model_name='local_chat'."
+        )
+    parser.add_argument(
         "--benchmark", 
         type=str, 
         required=True, 

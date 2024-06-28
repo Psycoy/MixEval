@@ -149,6 +149,7 @@ AVAILABLE_MODELS = {
     "mpt_7b_instruct": "MPT_7B_Instruct",
     
     "xwin_lm_7b_v01": "XWin_LM_7B_V01",
+    "local_chat": "LocalChatModel"
     
 }
 
