@@ -1,5 +1,6 @@
 # Essential Configurations for Evaluation
 
+## General Settings
 1. `--batch_size` works for both open-source and api model evaluation. When evaluating open-source models, you have to adjust the `batch_size` according to the GPU memory; when evaluating api models, `--batch_size` specifies the number of parallel calls to the target api model. You should set it properly according to your OpenAI user tier to avoid rate limits. 
 
 2. `--api_parallel_num` specifies the number of parallel calls to the model parser api. In general, if you are a Tier-5 user, you can set `--api_parallel_num` to 100 or more to parse results in **30 seconds**.
