@@ -20,6 +20,10 @@
 
 <br>
 
+# ⚡ News
+[2024-06-29] Our evaluation suite now supports evaluating local checkpoints, check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) for details! 
+
+[2024-06-29] Our evaluation suite now supports other apis for model parser. Specify the `--api_base_url` if you wish to use other api such as llama.cpp server and Azure OpenAI API.
 
 # MixEval
 We introduce **MixEval**, a ground-truth-based dynamic benchmark derived from off-the-shelf benchmark mixtures, which evaluates LLMs with a highly capable model ranking (i.e., 0.96 correlation with Chatbot Arena) while running locally and quickly (6% the time and cost of running MMLU), with its queries being stably and effortlessly updated every month to avoid contamination.
