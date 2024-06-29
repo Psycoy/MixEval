@@ -21,6 +21,7 @@ import time
 import warnings
 warnings.simplefilter("ignore", category=DeprecationWarning)
 warnings.simplefilter("ignore", category=FutureWarning)
+from prettytable import PrettyTable
 
 import mix_eval.api.registry
 from mix_eval.utils.common_utils import set_seed
@@ -704,26 +705,19 @@ def compute_metric_closeended_multichoice(args):
     else:
         return compute_metric_closeended_multichoice_ruleparse(args)
 
-def dict_to_markdown_table(data):
-    # Separate overall score from other metrics
-    overall_score = data.pop("overall score (final score)")
-
-    # Sort the remaining items by value in descending order
-    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
-
-    # Add overall score back at the end
-    sorted_data.append(("overall score (final score)", overall_score))
-
-    # Create the header
-    markdown = "| Metric | Score |\n|--------|-------|\n"
-
-    # Add each item to the table
-    for key, value in sorted_data:
-        # Format the value as a percentage with 2 decimal places
-        formatted_value = f"{value:.2%}"
-        markdown += f"| {key} | {formatted_value} |\n"
-
-    return markdown  
+def print_table(data_dict):
+    # Create a table
+    table = PrettyTable()
+    
+    # Set the column names
+    table.field_names = ["Split", "Score"]
+    
+    # Add rows from the dictionary
+    for key, value in data_dict.items():
+        table.add_row([key, value])
+    
+    # Print the table
+    print(table) 
                 
 def compute_metric(args):
     score_dict_ff = compute_metric_closeended_freeform(args)
@@ -738,6 +732,7 @@ def compute_metric(args):
               f"split of these models: \n{missing_models}\n\nA possible reason may be that they lack a model answer file. "
               "Skipping them...")
     
+    score_dict = {}
     for model in common_models:
         score_dir = os.path.join(
             args.model_response_dir, 
@@ -750,10 +745,14 @@ def compute_metric(args):
             **{k:v for k, v in score_dict_ff[model].items() if k != "overall"},
             **{k:v for k, v in score_dict_mp[model].items() if k != "overall"},
             }
+        score_dict[model] = score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
             f.write(json.dumps(score_dict_model, indent=4) + "\n")
-        print(dict_to_markdown_table(score_dict_model)) 
+        print_table(score_dict_model)
     
+    print(f"Saving the model scores to {os.path.join(args.model_response_dir, 'score.json')} ...")
+    with open(os.path.join(args.model_response_dir, "score.json"), "w") as f:
+        f.write(json.dumps(score_dict, indent=4) + "\n")
     
 def compute_metrics_p(args):
     # to be called in evaluate.py
