@@ -202,6 +202,11 @@ MixEval is effective as
 
 Feel free to hit the ⭐**star** button or 🦾**contribute**! We review new issues and PRs regularly and will acknowledge your contributions!
 
+We would like to extend our heartfelt gratitude to the following contributors for their exceptional commitment to this repository:
+- @RodriMora
+- @teknium1
+- @philschmid
+
 <br>
 
 # 📑 Citation
