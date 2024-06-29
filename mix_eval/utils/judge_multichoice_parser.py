@@ -25,6 +25,7 @@ class ChatGPTJudgeCloseendMultichoice:
         load_dotenv()
         self.client = OpenAI(
             api_key=os.getenv('MODEL_PARSER_API'),
+            base_url=args.api_base_url,
             timeout=Timeout(timeout=20.0, connect=5.0)
         )
 

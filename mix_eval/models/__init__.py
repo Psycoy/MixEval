@@ -101,6 +101,7 @@ AVAILABLE_MODELS = {
     "claude_3_haiku": "Claude_3_Haiku",
     "claude_3_sonnet": "Claude_3_Sonnet",
     "claude_3_opus": "Claude_3_Opus",
+    "claude_3_5_sonnet": "Claude_3_5_Sonnet",
     
     "mistral_small": "Mistral_Small",
     "mistral_medium": "Mistral_Medium",
@@ -149,6 +150,9 @@ AVAILABLE_MODELS = {
     "mpt_7b_instruct": "MPT_7B_Instruct",
     
     "xwin_lm_7b_v01": "XWin_LM_7B_V01",
+    
+    "local_chat": "LocalChatModel",
+    "local_base": "LocalBaseModel",
     
 }
 

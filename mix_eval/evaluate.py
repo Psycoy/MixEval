@@ -43,6 +43,13 @@ def parse_args():
         help="Model to evaluate."
         )
     parser.add_argument(
+        "--model_path", 
+        type=str, 
+        required=False, 
+        default=None,
+        help="Path to local model, only work with model_name='local_chat'."
+        )
+    parser.add_argument(
         "--benchmark", 
         type=str, 
         required=True, 
@@ -75,6 +82,12 @@ def parse_args():
         default=100, 
         help="Number of parallel threads for calling the model parser api if use model parsing." 
         "If you hit rate limit error frequently, try to reduce this number."
+        )
+    parser.add_argument(
+        "--api_base_url", 
+        type=str, 
+        default=None, 
+        help="The base url for the model parser api."
         )
     parser.add_argument(
         "--data_path", 

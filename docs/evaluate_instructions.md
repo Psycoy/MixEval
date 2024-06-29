@@ -4,6 +4,8 @@
 
 2. `--api_parallel_num` specifies the number of parallel calls to the model parser api. In general, if you are a Tier-5 user, you can set `--api_parallel_num` to 100 or more to parse results in **30 seconds**.
 
+3. Specify the `--api_base_url` if you wish to use other api such as llama.cpp server and Azure OpenAI API.
+
 3. You can use `--max_gpu_memory` to specify the maximum memory per GPU for storing model weights. This allows it to allocate more memory for activations, so you can use longer context lengths or larger `batch_size`. E.g., with 4 GPUs, we can set `--max_gpu_memory 5GiB` for `gemma_11_7b_instruct`.
 
 4. Model response files and scores will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, for example, `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`. We take the `overall score` as the reported score in [Leaderboard](https://mixeval.github.io/#leaderboard).
@@ -18,3 +20,19 @@
     ```
     > The key name here is 'k_oai'. You can find the key name in the model's class. For example, `claude_3_haiku`'s key can be found in `mixeval.models.claude_3_haiku`'s `__init__` function: `api_key=os.getenv('k_ant')`, where `k_ant` is the key name.
 
+
+## Evaluating Local Checkpoint
+If you are evaluating a local checkpoint, specify the `--model_path <your model path>` and `--model_name local_chat` (or `--model_name local_base` if you are evaluating a base model):
+```
+python -m mix_eval.evaluate \
+    --model_name local_chat \
+    --model_path <your model path> \
+    --benchmark mixeval_hard \
+    --version 2024-06-01 \
+    --batch_size 20 \
+    --max_gpu_memory 5GiB \
+    --output_dir mix_eval/data/model_responses/ \
+    --api_parallel_num 20
+```
+
+Modify the `mix_eval/models/local_chat.py` or `mix_eval/models/local_base.py` according to your model config. You need to overwrite the `build_model` function if your checkpoint cannot be loaded by 'transformers.AutoModelForCausalLM.from_pretrained'. The same applies to `build_tokenizer`.

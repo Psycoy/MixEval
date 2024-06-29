@@ -86,6 +86,8 @@ python -m mix_eval.evaluate \
 
 > Model response files and scores will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this case, it's `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`. We take the `overall score` as the reported score in [Leaderboard](https://mixeval.github.io/#leaderboard).
 
+> Check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) if you are evaluating a local checkpoint.
+
 > **ATTENTION❗** It's important to read the essential configurations [here](docs/evaluate_instructions.md) before running the evaluation.
 
 <br>
@@ -117,6 +119,8 @@ python -m mix_eval.evaluate \
     --inference_only
 ```
 > Model response files will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this example it's `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`.
+
+> Check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) if you are evaluating a local checkpoint.
 
 > **ATTENTION❗** It's important to read the essential configurations [here](docs/evaluate_instructions.md) before running the evaluation.
 
@@ -154,6 +158,8 @@ If you want to separately compute the scores, you should
         claude_3_opus
     ```
 > You should set the `--api_parallel_num` properly according to your OpenAI user tier to avoid rate limits. In general, if you are a Tier-5 user, you can set `--api_parallel_num` to 100 or more to parse results in **30 seconds**.
+
+> Specify the `--api_base_url` if you wish to use other api such as llama.cpp server and Azure OpenAI API.
 
 > If you are parsing base models' responses, set the `--extract_base_model_response` flag to only retain the meaningful part in models' response to get more stablized parsing results.
 
