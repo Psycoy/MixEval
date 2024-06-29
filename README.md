@@ -62,7 +62,7 @@ bash setup.sh
 
 # setup done
 ```
-**(Step 2)** Setup the OpenAI API key for model parser. Add the below line to `.env` file:
+**(Step 2)** Setup the OpenAI API key for model parser. Create `.env` file under root dir (`MixEval/`) and add the below line to it:
 ```
 MODEL_PARSER_API=<your openai api key>
 ```
