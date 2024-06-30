@@ -38,6 +38,8 @@ AVAILABLE_MODELS = {
     "gemma_7b": "Gemma_7B",
     "gemma_11_2b_instruct": "Gemma_11_2B_Instruct",
     "gemma_11_7b_instruct": "Gemma_11_7B_Instruct",
+    "gemma_2_9b_instruct": "Gemma_2_9B_Instruct",
+    "gemma_2_27b_instruct": "Gemma_2_27B_Instruct",
     
     "mistral_7b": "Mistral_7B",
     "mixtral_8_7b": "Mixtral_8_7B",
