@@ -9,6 +9,7 @@ class LocalChatModel(ChatModel):
     def __init__(self, args):
         super().__init__(args)
         self.model_name = args.model_path # updates path to local model
+        self.revision = args.model_revision
         self.attn_implementation = "flash_attention_2" # If use default, set to None
         self.model_dtype = torch.bfloat16
         self.trust_remote_code = True
@@ -28,6 +29,7 @@ class LocalChatModel(ChatModel):
     def build_tokenizer(self):
         tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
+            revision=self.revision,
             model_max_length=self.model_max_len,
             trust_remote_code=self.trust_remote_code)
         return tokenizer

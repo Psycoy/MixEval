@@ -48,6 +48,7 @@ class ModelBase:
             
         model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
+            revision=self.revision,
             torch_dtype=self.model_dtype,
             trust_remote_code=self.trust_remote_code,
             **kwargs
@@ -57,6 +58,7 @@ class ModelBase:
     def build_tokenizer(self):
         tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
+            revision=self.revision,
             model_max_length=self.model_max_len,
             padding_side=self.padding_side,
             use_fast=self.use_fast_tokenizer,
@@ -179,6 +181,7 @@ class ChatModel(ModelBase):
     def __init__(self, args):
         super().__init__(args)
         self.model_name = None
+        self.revision = None
         self.attn_implementation = None
         
         self.SYSTEM_MESSAGE = {"role": "system", "content": "You are a helpful assistant."} # set to None if no system message
@@ -311,6 +314,7 @@ class BaseModel(ModelBase):
     def __init__(self, args):
         super().__init__(args)
         self.model_name = None
+        self.revision = None
         self.attn_implementation = None # If use default, set to None
         
         self.closeended_max_new_tokens = self.closeended_max_new_tokens_basemodel
