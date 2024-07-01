@@ -50,6 +50,12 @@ def parse_args():
         help="Path to local model, only work with model_name='local_chat'."
         )
     parser.add_argument(
+        "--model_revision",
+        type=str,
+        default=None,
+        help="The model revision to use. If not specified, the latest revision will be used."
+        )
+    parser.add_argument(
         "--benchmark", 
         type=str, 
         required=True, 
