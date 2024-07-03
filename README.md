@@ -171,6 +171,17 @@ If you want to separately compute the scores, you should
 
 <br>
 
+# Use Azure Open AI ENdpoint
+Some of you might use Azure Open AI endpoint instead of direct USage of Open AI API.
+You can simply drop you Azure credentials in the `.env` like this:
+```
+OPENAI_API_TYPE=azure
+OPENAI_API_KEY=xyz
+OPENAI_API_BASE=xyz
+OPENAI_API_VERSION=2023-07-01-preview
+```
+
+
 # What is MixEval?
 
 > See our [homepage](https://mixeval.github.io/) and [paper](https://arxiv.org/abs/2406.06565) for more details!
