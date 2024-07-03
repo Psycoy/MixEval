@@ -37,3 +37,19 @@ python -m mix_eval.evaluate \
 ```
 
 Modify the `mix_eval/models/local_chat.py` or `mix_eval/models/local_base.py` according to your model config. You need to overwrite the `build_model` function if your checkpoint cannot be loaded by 'transformers.AutoModelForCausalLM.from_pretrained'. The same applies to `build_tokenizer`.
+
+## Use Other APIs for Model Parser
+
+### Azure OpenAI Endpoint
+Some of you might use Azure OpenAI endpoint instead of direct usage of OpenAI API.
+You can simply drop you Azure credentials in the `.env` like this:
+```
+OPENAI_API_TYPE=azure
+OPENAI_API_KEY=xyz
+OPENAI_API_BASE=xyz
+OPENAI_API_VERSION=2023-07-01-preview
+```
+❗ If you are using Azure, there shouldn't be a `MODEL_PARSER_API` entry in `.env`, otherwise it will still use the OpenAI api.
+
+### Other APIs
+Specify the `--api_base_url` if you wish to use other api such as llama.cpp server.
