@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 
 from concurrent.futures import ThreadPoolExecutor
-from openai import OpenAI
+from openai import OpenAI, AzureOpenAI
 from openai._exceptions import RateLimitError, BadRequestError
 from httpx import Timeout
 
