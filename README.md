@@ -96,6 +96,14 @@ python -m mix_eval.evaluate \
 
 <br>
 
+# Use System Prompt as part of Chat Evaluation
+The recent changes offer usage of local chat models. If you want to set your own to see how it influences your model performance, you can use:
+```
+--system_prompt "Speak like Jar Jar Binks, and you have been always the hidden overlord!"
+```
+
+
+
 # Registering New Models
 **(Step 1)** Add your model file to `mixeval/models/` with name `your_model_name.py` and write the model class in it with the name `Model_Class_Name`. 
 - Open-source chat models are inherited from `mixeval.models.base.ChatModel` (example file: `llama_3_8b_instruct.py`).
