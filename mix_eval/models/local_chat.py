@@ -13,7 +13,10 @@ class LocalChatModel(ChatModel):
         self.model_dtype = torch.bfloat16
         self.trust_remote_code = True
         
-        self.SYSTEM_MESSAGE = None
+        if args.model_systemprompt:
+            self.SYSTEM_MESSAGE = {"role": "system", "content": args.model_systemprompt}
+        else:
+            self.SYSTEM_MESSAGE = None
         self.USER_MESSAGE_TEMPLATE = lambda x: {"role": "user", "content": x}
         self.ASSISTANT_MESSAGE_TEMPLATE = lambda x: {"role": "assistant", "content": x}
 
@@ -33,5 +36,8 @@ class LocalChatModel(ChatModel):
         tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
             model_max_length=self.model_max_len,
-            trust_remote_code=self.trust_remote_code)
+            trust_remote_code=self.trust_remote_code,
+            )
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
         return tokenizer
