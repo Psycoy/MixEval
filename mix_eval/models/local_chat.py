@@ -36,8 +36,8 @@ class LocalChatModel(ChatModel):
         tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
             model_max_length=self.model_max_len,
-            trust_remote_code=self.trust_remote_code,
-            )
+            padding_side=self.padding_side,
+            trust_remote_code=self.trust_remote_code)
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
         return tokenizer
