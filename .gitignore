@@ -6,3 +6,4 @@
 /mix_eval/eval_scripts
 build_dynamic_benchmark_version_control.sh
 .env
+*.DS_Store
