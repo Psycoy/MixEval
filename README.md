@@ -23,7 +23,7 @@
 # ⚡ News
 [2024-06-29] Our evaluation suite now supports evaluating local checkpoints, check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) for details! 
 
-[2024-06-29] Our evaluation suite now supports other apis for model parser. Specify the `--api_base_url` if you wish to use other api such as llama.cpp server and Azure OpenAI API.
+[2024-06-29] Our evaluation suite now supports other apis for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
 
 # MixEval
 We introduce **MixEval**, a ground-truth-based dynamic benchmark derived from off-the-shelf benchmark mixtures, which evaluates LLMs with a highly capable model ranking (i.e., 0.96 correlation with Chatbot Arena) while running locally and quickly (6% the time and cost of running MMLU), with its queries being stably and effortlessly updated every month to avoid contamination.
@@ -49,7 +49,7 @@ The **MixEval** consists of two benchmarks: `MixEval` and `MixEval-Hard`, both u
 # Click-and-Go LLM Evaluation Suite
 This repository hosts the evaluation code and dynamic data release for **MixEval**. The current dynamic benchmark version is displayed at the top of this page. We offer a reliable click-and-go evaluation suite compatible with both **open-source** and **proprietary** models, which includes model response generation and score computation. Additionally, this evaluation suite facilitates straightforward registration of custom models and benchmark data.
 
-> As demonstrated in the [paper](https://arxiv.org/abs/2406.06565), traditional rule-based parsers exhibit significant instability and are prone to considerable errors. We employ either `GPT-3.5-Turbo` or open-source models as our model parser, which has been proven stable in [our]() and [this](https://arxiv.org/pdf/2404.01258) study. 
+> As demonstrated in the [paper](https://arxiv.org/abs/2406.06565), traditional rule-based parsers exhibit significant instability and are prone to considerable errors. We employ either `GPT-3.5-Turbo` or open-source models as our model parser, which has been proven stable in [our](https://arxiv.org/abs/2406.06565) and [this](https://arxiv.org/pdf/2404.01258) study. 
 
 **ATTENTION❗ Feel free to use your own evaluation code to evaluate with MixEval data. We provide the guidelines [here](docs/how_to_use_your_own_eval_code.md).**
 
@@ -70,7 +70,9 @@ bash setup.sh
 ```
 MODEL_PARSER_API=<your openai api key>
 ```
-> The values in [Leaderboard](https://mixeval.github.io/#leaderboard) use `GPT-3.5-Turbo-0125` as the default model parser. Open-source model parsers are also supported.
+> The values in [Leaderboard](https://mixeval.github.io/#leaderboard) use `GPT-3.5-Turbo-0125` as the default model parser. Open-source model parsers will also be supported.
+
+> If you are using Azure or APIs for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
 
 **(Step 3)** Run evaluation and get results. That's all!
 ```
@@ -171,23 +173,13 @@ If you want to separately compute the scores, you should
     ```
 > You should set the `--api_parallel_num` properly according to your OpenAI user tier to avoid rate limits. In general, if you are a Tier-5 user, you can set `--api_parallel_num` to 100 or more to parse results in **30 seconds**.
 
-> Specify the `--api_base_url` if you wish to use other api such as llama.cpp server and Azure OpenAI API.
+> If you are using Azure or APIs for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
 
 > If you are parsing base models' responses, set the `--extract_base_model_response` flag to only retain the meaningful part in models' response to get more stablized parsing results.
 
 > If you finished the model parsing some time ago and now want to display the model results again, add `--compute_score_from_judged_file` flag to avoid calling the model parser api again to save your budget. You have to make sure that there exists the parsed files with the name of `judge_results_ff_model_judge_gpt-3.5-turbo-0125` and `judge_results_mp_model_judge_gpt-3.5-turbo-0125` under the target model response folder, where `gpt-3.5-turbo-0125` denotes the model parser name, `ff` denotes free-form, `mp` denotes multiple-choice.
 
 <br>
-
-# Use Azure Open AI ENdpoint
-Some of you might use Azure Open AI endpoint instead of direct USage of Open AI API.
-You can simply drop you Azure credentials in the `.env` like this:
-```
-OPENAI_API_TYPE=azure
-OPENAI_API_KEY=xyz
-OPENAI_API_BASE=xyz
-OPENAI_API_VERSION=2023-07-01-preview
-```
 
 
 # What is MixEval?
@@ -229,6 +221,7 @@ We would like to extend our heartfelt gratitude to the following contributors fo
 - @RodriMora
 - @teknium1
 - @philschmid
+- @carstendraschner
 
 <br>
 
