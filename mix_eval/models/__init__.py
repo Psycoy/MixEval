@@ -99,6 +99,7 @@ AVAILABLE_MODELS = {
     "gpt_4_0125_preview": "GPT_4_0125_Preview",
     "gpt_4_1106_preview": "GPT_4_1106_Preview",
     "gpt_4o": "GPT_4o",
+    "gpt_4o_mini": "GPT_4o_Mini",
     
     "claude_3_haiku": "Claude_3_Haiku",
     "claude_3_sonnet": "Claude_3_Sonnet",
@@ -108,6 +109,9 @@ AVAILABLE_MODELS = {
     "mistral_small": "Mistral_Small",
     "mistral_medium": "Mistral_Medium",
     "mistral_large": "Mistral_Large",
+    "mistral_large_2": "Mistral_Large_2",
+    "mistral_nemo": "Mistral_Nemo",
+    
     
     "gemini_10_pro": "Gemini_10_Pro",
     "gemini_15_pro": "Gemini_15_Pro",
