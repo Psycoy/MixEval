@@ -66,6 +66,8 @@ bash setup.sh
 
 # setup done
 ```
+> Note: You may have to update the dependencies in `setup.py` if you are evaluating the up-to-date models.
+
 **(Step 2)** Setup the OpenAI API key for model parser. Create `.env` file under root dir (`MixEval/`) and add the below line to it:
 ```
 MODEL_PARSER_API=<your openai api key>
