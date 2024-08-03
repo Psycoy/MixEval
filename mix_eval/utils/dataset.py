@@ -69,10 +69,6 @@ class EvalDatasetCloseended(Dataset):
         else:
             raise ValueError(f"Split {args.split} not supported in {self.__class__.__name__}")
         
-        # sort the lengths of the raw inputs to make the batching more efficient
-        print("Sorting data based on input length.")
-        raw_inputs = sorted(raw_inputs, key=lambda x: len(nltk.word_tokenize(x['formated_input'])), reverse=True)
-        
         self.raw_inputs = raw_inputs          
 
     def __len__(self):
