@@ -50,6 +50,12 @@ def parse_args():
         help="Path to local model, only work with model_name='local_chat'."
         )
     parser.add_argument(
+        "--model_systemprompt", 
+        type=str, 
+        required=False, 
+        help="Model systemprompt available for local_chat model"
+        )
+    parser.add_argument(
         "--benchmark", 
         type=str, 
         required=True, 

@@ -13,6 +13,13 @@ class LocalChatModel(ChatModel):
         self.model_dtype = torch.bfloat16
         self.trust_remote_code = True
         
+        if args.model_systemprompt:
+            self.SYSTEM_MESSAGE = {"role": "system", "content": args.model_systemprompt}
+        else:
+            self.SYSTEM_MESSAGE = None
+        self.USER_MESSAGE_TEMPLATE = lambda x: {"role": "user", "content": x}
+        self.ASSISTANT_MESSAGE_TEMPLATE = lambda x: {"role": "assistant", "content": x}
+
 
         self.model = self.build_model()
         self.model_max_len = self.model.config.max_position_embeddings 
