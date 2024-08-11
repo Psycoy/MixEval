@@ -6,3 +6,5 @@
 /mix_eval/eval_scripts
 build_dynamic_benchmark_version_control.sh
 .env
+resampled_output/
+misc/
