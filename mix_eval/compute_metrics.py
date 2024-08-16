@@ -21,6 +21,7 @@ import time
 import warnings
 warnings.simplefilter("ignore", category=DeprecationWarning)
 warnings.simplefilter("ignore", category=FutureWarning)
+from prettytable import PrettyTable
 
 import mix_eval.api.registry
 from mix_eval.utils.common_utils import set_seed
@@ -85,6 +86,12 @@ def parse_args():
         default="model", 
         choices=["model", "rule"], 
         help="Parser for multiple-choice responses, either model parser or rule-based parser."
+        )
+    parser.add_argument(
+        "--api_base_url", 
+        type=str, 
+        default=None, 
+        help="The base url for the model parser api."
         )
     parser.add_argument(
         "--api_parallel_num", 
@@ -697,7 +704,20 @@ def compute_metric_closeended_multichoice(args):
         return compute_metric_closeended_multichoice_modelparse(args)
     else:
         return compute_metric_closeended_multichoice_ruleparse(args)
-                
+
+def print_table(data_dict):
+    # Create a table
+    table = PrettyTable()
+    
+    # Set the column names
+    table.field_names = ["Split", "Score"]
+    
+    # Add rows from the dictionary
+    for key, value in data_dict.items():
+        table.add_row([key, value])
+    
+    # Print the table
+    print(table) 
                 
 def compute_metric(args):
     score_dict_ff = compute_metric_closeended_freeform(args)
@@ -712,6 +732,7 @@ def compute_metric(args):
               f"split of these models: \n{missing_models}\n\nA possible reason may be that they lack a model answer file. "
               "Skipping them...")
     
+    score_dict = {}
     for model in common_models:
         score_dir = os.path.join(
             args.model_response_dir, 
@@ -724,9 +745,14 @@ def compute_metric(args):
             **{k:v for k, v in score_dict_ff[model].items() if k != "overall"},
             **{k:v for k, v in score_dict_mp[model].items() if k != "overall"},
             }
+        score_dict[model] = score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
             f.write(json.dumps(score_dict_model, indent=4) + "\n")
+        print_table(score_dict_model)
     
+    print(f"Saving the model scores to {os.path.join(args.model_response_dir, 'score.json')} ...")
+    with open(os.path.join(args.model_response_dir, "score.json"), "w") as f:
+        f.write(json.dumps(score_dict, indent=4) + "\n")
     
 def compute_metrics_p(args):
     # to be called in evaluate.py

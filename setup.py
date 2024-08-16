@@ -28,6 +28,7 @@ setup(
         'google-cloud-aiplatform==1.53.0',
         'reka-api==2.0.0',
         'dashscope==1.19.2',
+        "prettytable"
     ],
     package_data={
     },

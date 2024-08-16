@@ -1,11 +1,11 @@
 <p align="center" width="100%">
 <img src="resources/imgs/header.png"  width="100%" height="100%">
 </p>
-<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="https://arxiv.org/abs/2406.06565">📜 arXiv</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="https://huggingface.co/papers/2406.06565">🤗 HF Paper</a> | <a href="https://x.com/NiJinjie/status/1798182749049852411">𝕏 Twitter</a></p>
+<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="https://arxiv.org/abs/2406.06565">📜 arXiv</a> | <a href="https://beneficial-chips-08e.notion.site/Don-t-Build-Random-Evals-Principles-for-General-Purpose-Model-Evaluation-bd5a85ba10f447bc9ac560050f67270b">📝 blog</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="https://huggingface.co/papers/2406.06565">🤗 HF Paper</a> | <a href="https://x.com/NiJinjie/status/1798182749049852411">𝕏 Twitter</a></p>
 </p>
 
 ---
-[![Static Badge](https://img.shields.io/badge/Dynamic_Bench_Version-2024--06--01-darkcyan)](https://github.com/Psycoy/MixEval/tree/main/mix_eval/data)
+[![Static Badge](https://img.shields.io/badge/Dynamic_Bench_Version-2024--08--11-darkcyan)](https://github.com/Psycoy/MixEval/tree/main/mix_eval/data)
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40Us)](https://x.com/NiJinjie)
 ![GitHub Repo stars](https://img.shields.io/github/stars/Psycoy/MixEval%20)
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FPsycoy%2FMixEval&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"/></a>
@@ -20,6 +20,10 @@
 
 <br>
 
+# ⚡ News
+[2024-06-29] Our evaluation suite now supports evaluating local checkpoints, check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) for details! 
+
+[2024-06-29] Our evaluation suite now supports other apis for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
 
 # MixEval
 We introduce **MixEval**, a ground-truth-based dynamic benchmark derived from off-the-shelf benchmark mixtures, which evaluates LLMs with a highly capable model ranking (i.e., 0.96 correlation with Chatbot Arena) while running locally and quickly (6% the time and cost of running MMLU), with its queries being stably and effortlessly updated every month to avoid contamination.
@@ -45,7 +49,7 @@ The **MixEval** consists of two benchmarks: `MixEval` and `MixEval-Hard`, both u
 # Click-and-Go LLM Evaluation Suite
 This repository hosts the evaluation code and dynamic data release for **MixEval**. The current dynamic benchmark version is displayed at the top of this page. We offer a reliable click-and-go evaluation suite compatible with both **open-source** and **proprietary** models, which includes model response generation and score computation. Additionally, this evaluation suite facilitates straightforward registration of custom models and benchmark data.
 
-> As demonstrated in the [paper](https://arxiv.org/abs/2406.06565), traditional rule-based parsers exhibit significant instability and are prone to considerable errors. We employ either `GPT-3.5-Turbo` or open-source models as our model parser, which has been proven stable in [our]() and [this](https://arxiv.org/pdf/2404.01258) study. 
+> As demonstrated in the [paper](https://arxiv.org/abs/2406.06565), traditional rule-based parsers exhibit significant instability and are prone to considerable errors. We employ either `GPT-3.5-Turbo` or open-source models as our model parser, which has been proven stable in [our](https://arxiv.org/abs/2406.06565) and [this](https://arxiv.org/pdf/2404.01258) study. 
 
 **ATTENTION❗ Feel free to use your own evaluation code to evaluate with MixEval data. We provide the guidelines [here](docs/how_to_use_your_own_eval_code.md).**
 
@@ -62,11 +66,15 @@ bash setup.sh
 
 # setup done
 ```
-**(Step 2)** Setup the OpenAI API key for model parser. Add the below line to `.env` file:
+> Note: You may have to update the dependencies in `setup.py` if you are evaluating the up-to-date models.
+
+**(Step 2)** Setup the OpenAI API key for model parser. Create `.env` file under root dir (`MixEval/`) and add the below line to it:
 ```
 MODEL_PARSER_API=<your openai api key>
 ```
-> The values in [Leaderboard](https://mixeval.github.io/#leaderboard) use `GPT-3.5-Turbo-0125` as the default model parser. Open-source model parsers are also supported.
+> The values in [Leaderboard](https://mixeval.github.io/#leaderboard) use `GPT-3.5-Turbo-0125` as the default model parser. Open-source model parsers will also be supported.
+
+> If you are using Azure or APIs for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
 
 **(Step 3)** Run evaluation and get results. That's all!
 ```
@@ -85,6 +93,8 @@ python -m mix_eval.evaluate \
 > This command will run both inference and score computation. If you want to run model inference only, check [here](#only-performing-model-inference); if you want to run score computation only, check [here](#only-computing-scores).
 
 > Model response files and scores will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this case, it's `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`. We take the `overall score` as the reported score in [Leaderboard](https://mixeval.github.io/#leaderboard).
+
+> Check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) if you are evaluating a local checkpoint.
 
 > **ATTENTION❗** It's important to read the essential configurations [here](docs/evaluate_instructions.md) before running the evaluation.
 
@@ -117,6 +127,8 @@ python -m mix_eval.evaluate \
     --inference_only
 ```
 > Model response files will be saved to `<output_folder>/<model_name>/<benchmark>/<version>/`, and in this example it's `mix_eval/data/model_responses/gemma_11_7b_instruct/mixeval_hard/2024-06-01/`.
+
+> Check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) if you are evaluating a local checkpoint.
 
 > **ATTENTION❗** It's important to read the essential configurations [here](docs/evaluate_instructions.md) before running the evaluation.
 
@@ -155,11 +167,14 @@ If you want to separately compute the scores, you should
     ```
 > You should set the `--api_parallel_num` properly according to your OpenAI user tier to avoid rate limits. In general, if you are a Tier-5 user, you can set `--api_parallel_num` to 100 or more to parse results in **30 seconds**.
 
+> If you are using Azure or APIs for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
+
 > If you are parsing base models' responses, set the `--extract_base_model_response` flag to only retain the meaningful part in models' response to get more stablized parsing results.
 
 > If you finished the model parsing some time ago and now want to display the model results again, add `--compute_score_from_judged_file` flag to avoid calling the model parser api again to save your budget. You have to make sure that there exists the parsed files with the name of `judge_results_ff_model_judge_gpt-3.5-turbo-0125` and `judge_results_mp_model_judge_gpt-3.5-turbo-0125` under the target model response folder, where `gpt-3.5-turbo-0125` denotes the model parser name, `ff` denotes free-form, `mp` denotes multiple-choice.
 
 <br>
+
 
 # What is MixEval?
 
@@ -195,6 +210,12 @@ MixEval is effective as
 # 🦾 Contribute
 
 Feel free to hit the ⭐**star** button or 🦾**contribute**! We review new issues and PRs regularly and will acknowledge your contributions!
+
+We would like to extend our heartfelt gratitude to the following contributors for their exceptional commitment to this repository:
+- @RodriMora
+- @teknium1
+- @philschmid
+- @carstendraschner
 
 <br>
 
