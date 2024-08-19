@@ -77,6 +77,13 @@ def parse_args():
         "so you can use longer context lengths or larger batch sizes."
         )
     parser.add_argument(
+        "--cpu_offload_gb", 
+        type=int, 
+        default=None, 
+        help="Amount of memory (in GB) to offload to CPU for loading the weights. "
+        "Only valid with vLLM models."
+        )
+    parser.add_argument(
         "--api_parallel_num", 
         type=int, 
         default=100, 

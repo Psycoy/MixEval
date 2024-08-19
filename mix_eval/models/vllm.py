@@ -2,12 +2,17 @@ from .base import ChatModel
 from vllm import LLM, SamplingParams
 import torch
 import json
+import re
 
 class ChatModelVLLM(ChatModel):
 
     def build_model(self):
         num_gpus = torch.cuda.device_count()
-        return LLM(model=self.model_name, tensor_parallel_size=num_gpus, enable_chunked_prefill=True, distributed_executor_backend="ray")
+
+        if self.args.cpu_offload_gb:
+            return LLM(model=self.model_name, tensor_parallel_size=num_gpus, enable_chunked_prefill=True, distributed_executor_backend="ray", cpu_offload_gb=self.args.cpu_offload_gb)
+        else:
+            return LLM(model=self.model_name, tensor_parallel_size=num_gpus, enable_chunked_prefill=True, distributed_executor_backend="ray")
 
     def get_closeended_responses(self, batch, response_file):
         sampling_params = SamplingParams(max_tokens=self.closeended_max_new_tokens, **self.gen_kwargs)
