@@ -246,14 +246,15 @@ def _eval(args, model=None):
     return model
 
 def eval(args):
+    model = None
     if args.benchmark == "mixeval":
         args.split = "close_freeform"
-        model = _eval(args)
+        model = _eval(args, model)
         args.split = "close_multichoice"
         _eval(args, model)
     elif args.benchmark == "mixeval_hard":
         args.split = "close_freeform_hard"
-        model = _eval(args)
+        model = _eval(args, model)
         args.split = "close_multichoice_hard"
         _eval(args, model)
     else:
