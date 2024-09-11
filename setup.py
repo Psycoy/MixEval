@@ -9,7 +9,6 @@ setup(
     install_requires=[
         'transformers>=4.43.1',
         'tiktoken>=0.6.0',
-        'fschat>=0.2.36',
         'SentencePiece>=0.2.0',
         'accelerate>=0.30.1',
         'pandas>=2.2.2',
@@ -20,16 +19,29 @@ setup(
         'nltk>=3.8.1',
         'numpy>=1.26.3',
         'tqdm>=4.66.4',
-        'protobuf>=4.25.3',
         'python-dotenv>=1.0.1',
-        'anthropic>=0.28.0',
-        'mistralai>=0.3.0',
-        'google-generativeai>=0.5.4',
-        'google-cloud-aiplatform>=1.53.0',
-        'reka-api>=2.0.0',
-        'dashscope>=1.19.2',
+        
         "prettytable"
+        # Andere Dependencies, die immer benötigt werden
     ],
+    extras_require={
+        'online_model_outside_openai_and_hf': [
+            'anthropic>=0.28.0',
+            'mistralai>=0.3.0',
+            'google-generativeai>=0.5.4',
+            'google-cloud-aiplatform>=1.53.0',
+            'reka-api>=2.0.0',
+            'dashscope>=1.19.2',
+            'tiktoken>=0.6.0',
+            'fschat>=0.2.36',
+            'SentencePiece>=0.2.0',
+            # Andere optionalen Dependencies
+        ],
+        'potentially not used': [
+            'fschat>=0.2.36',       
+        ]
+        # Andere Gruppen von optionalen Dependencies
+    },
     package_data={
     },
     entry_points={
