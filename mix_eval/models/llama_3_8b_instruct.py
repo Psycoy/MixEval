@@ -16,6 +16,7 @@ class Llama_3_8B_Instruct(ChatModel):
         self.attn_implementation = 'flash_attention_2' # If use default, set to None
         
         self.SYSTEM_MESSAGE = {"role": "system", "content": "You are a pirate chatbot who always responds in pirate speak!"} # set to None if no system message
+        # self.SYSTEM_MESSAGE = None
         self.USER_MESSAGE_TEMPLATE = lambda x: {"role": "user", "content": x}
         self.ASSISTANT_MESSAGE_TEMPLATE = lambda x: {"role": "assistant", "content": x}
         

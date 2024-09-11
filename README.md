@@ -1,11 +1,11 @@
 <p align="center" width="100%">
 <img src="resources/imgs/header.png"  width="100%" height="100%">
 </p>
-<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="https://arxiv.org/abs/2406.06565">📜 arXiv</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="https://huggingface.co/papers/2406.06565">🤗 HF Paper</a> | <a href="https://x.com/NiJinjie/status/1798182749049852411">𝕏 Twitter</a></p>
+<p align="center"><a href="https://mixeval.github.io/">🏠 Homepage</a> | <a href="https://mixeval.github.io/#leaderboard">🏆 Leaderboard</a> | <a href="https://arxiv.org/abs/2406.06565">📜 arXiv</a> | <a href="https://beneficial-chips-08e.notion.site/Don-t-Build-Random-Evals-Principles-for-General-Purpose-Model-Evaluation-bd5a85ba10f447bc9ac560050f67270b">📝 blog</a> | <a href="https://huggingface.co/datasets/MixEval/MixEval">🤗 HF Dataset</a> | <a href="https://huggingface.co/papers/2406.06565">🤗 HF Paper</a> | <a href="https://x.com/NiJinjie/status/1798182749049852411">𝕏 Twitter</a></p>
 </p>
 
 ---
-[![Static Badge](https://img.shields.io/badge/Dynamic_Bench_Version-2024--06--01-darkcyan)](https://github.com/Psycoy/MixEval/tree/main/mix_eval/data)
+[![Static Badge](https://img.shields.io/badge/Dynamic_Bench_Version-2024--08--11-darkcyan)](https://github.com/Psycoy/MixEval/tree/main/mix_eval/data)
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40Us)](https://x.com/NiJinjie)
 ![GitHub Repo stars](https://img.shields.io/github/stars/Psycoy/MixEval%20)
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FPsycoy%2FMixEval&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"/></a>
@@ -66,6 +66,8 @@ bash setup.sh
 
 # setup done
 ```
+> Note: You may have to update the dependencies in `setup.py` if you are evaluating the up-to-date models.
+
 **(Step 2)** Setup the OpenAI API key for model parser. Create `.env` file under root dir (`MixEval/`) and add the below line to it:
 ```
 MODEL_PARSER_API=<your openai api key>

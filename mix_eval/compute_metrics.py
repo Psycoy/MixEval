@@ -742,8 +742,8 @@ def compute_metric(args):
             )
         score_dict_model = {
             "overall score (final score)": (score_dict_ff[model]['overall'] + score_dict_mp[model]['overall']) / 2,
-            **{k:v for k, v in score_dict_ff[model].items() if k != "overall"},
-            **{k:v for k, v in score_dict_mp[model].items() if k != "overall"},
+            **{f"{k} (free-form)":v for k, v in score_dict_ff[model].items() if k != "overall"},
+            **{f"{k} (multiple-choice)":v for k, v in score_dict_mp[model].items() if k != "overall"},
             }
         score_dict[model] = score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
