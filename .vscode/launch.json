@@ -1,0 +1,42 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python-Debugger: Aktuelle Datei mit Argumenten",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "mix_eval/evaluate.py",
+            "console": "integratedTerminal",
+            "args": [
+                // "--compute_score_from_judged_file",
+                "--model_name",
+                "local_chat",
+                "--model_path",
+                "microsoft/Phi-3.5-mini-instruct",
+                "--benchmark",
+                "mixeval_hard",
+                "--version",
+                "2024-06-01",
+                "--batch_size",
+                "20",
+                "--data_path",
+                "mix_eval/data/benchmark-data-combined-tiny",
+                "--multichoice_judge",
+                "GPT-35-Turbo-1106",
+                "--freeform_judge",
+                "GPT-35-Turbo-1106",
+                "--output_dir",
+                "mix_eval/data/benchmark-data-combined-tiny/responses",
+                "--api_parallel_num",
+                "8",
+            ],
+            "justMyCode": false,
+            "env": {
+                "DISABLE_MLFLOW_INTEGRATION": "TRUE"
+            }
+        }
+    ]
+}
