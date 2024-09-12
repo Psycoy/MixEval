@@ -161,11 +161,16 @@ def compute_metric_closeended_freeform_modelparse_from_judgefile(args):
                 if judge_dict['benchmark_name'] not in score_dict_model:
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
-            
+
+        
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
-    
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     return score_dict
 
 def compute_metric_closeended_freeform_ruleparse_from_judgefile(args):
@@ -740,15 +745,21 @@ def compute_metric(args):
             args.benchmark,
             args.version,
             )
-        score_dict_model = {
-            "overall score (final score)": (score_dict_ff[model]['overall'] + score_dict_mp[model]['overall']) / 2,
-            **{f"{k} (free-form)":v for k, v in score_dict_ff[model].items() if k != "overall"},
-            **{f"{k} (multiple-choice)":v for k, v in score_dict_mp[model].items() if k != "overall"},
-            }
-        score_dict[model] = score_dict_model
+        
+        tmp_score_dict_model = {}
+        for k in score_dict_mp[model].keys() | score_dict_ff[model].keys():
+            if k == "number_samples":
+                continue
+            sd_mp_l = score_dict_mp[model]["number_samples"].get(k, 0)
+            sd_ff_l = score_dict_ff[model]["number_samples"].get(k, 0)
+
+            tmp_score_dict_model[k] = score_dict_ff[model] * (sd_ff_l/(sd_ff_l+sd_mp_l)) + score_dict_mp[model].get(k, 0) * (sd_mp_l/(sd_ff_l+sd_mp_l))
+
+
+        score_dict[model] = tmp_score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
-            f.write(json.dumps(score_dict_model, indent=4) + "\n")
-        print_table(score_dict_model)
+            f.write(json.dumps(tmp_score_dict_model, indent=4) + "\n")
+        print_table(tmp_score_dict_model)
     
     print(f"Saving the model scores to {os.path.join(args.model_response_dir, 'score.json')} ...")
     with open(os.path.join(args.model_response_dir, "score.json"), "w") as f:
