@@ -747,7 +747,7 @@ def compute_metric(args):
             )
         
         tmp_score_dict_model = {}
-        for k in set(score_dict_mp[model].keys()).union(set(score_dict_ff[model].keys()))
+        for k in set(score_dict_mp[model].keys()).union(set(score_dict_ff[model].keys())):
             if k == "number_samples":
                 continue
             sd_mp_l = score_dict_mp[model]["number_samples"].get(k, 0)
