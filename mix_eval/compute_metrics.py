@@ -783,7 +783,7 @@ def compute_metric(args):
             sd_mp_l = score_dict_mp[model]["number_samples"].get(k, 0)
             sd_ff_l = score_dict_ff[model]["number_samples"].get(k, 0)
 
-            tmp_score_dict_model[k] = score_dict_ff[model] * (sd_ff_l/(sd_ff_l+sd_mp_l)) + score_dict_mp[model].get(k, 0) * (sd_mp_l/(sd_ff_l+sd_mp_l))
+            tmp_score_dict_model[k] = score_dict_ff[model].get(k, 0) * (sd_ff_l/(sd_ff_l+sd_mp_l)) + score_dict_mp[model].get(k, 0) * (sd_mp_l/(sd_ff_l+sd_mp_l))
 
         score_dict[model] = tmp_score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
