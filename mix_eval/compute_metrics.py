@@ -214,9 +214,14 @@ def compute_metric_closeended_freeform_ruleparse_from_judgefile(args):
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     
     return score_dict
 
@@ -272,9 +277,14 @@ def compute_metric_closeended_multichoice_modelparse_from_judgefile(args):
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     
     return score_dict
 
@@ -322,9 +332,14 @@ def compute_metric_closeended_multichoice_ruleparse_from_judgefile(args):
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     
     return score_dict
 
@@ -384,10 +399,15 @@ def compute_metric_closeended_freeform_modelparse(args):
             if judge_dict['benchmark_name'] not in score_dict_model:
                 score_dict_model[judge_dict['benchmark_name']] = []
             score_dict_model[judge_dict['benchmark_name']].append(judge_score)
-            
+
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
 
         with open(os.path.join(args.model_response_dir, 
                                model, 
@@ -473,10 +493,15 @@ def compute_metric_closeended_freeform_ruleparse(args):
             if judge_dict['benchmark_name'] not in score_dict_model:
                 score_dict_model[judge_dict['benchmark_name']] = []
             score_dict_model[judge_dict['benchmark_name']].append(judge_score)
-            
+
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
         
         with open(os.path.join(args.model_response_dir, 
                                model, 
@@ -582,9 +607,14 @@ def compute_metric_closeended_multichoice_modelparse(args):
                 score_dict_model[judge_dict['benchmark_name']] = []
             score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
         
         with open(os.path.join(args.model_response_dir, 
                                model, 
