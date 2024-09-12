@@ -1,5 +1,6 @@
 *.egg-info
 /scripts/
+/mix_eval/data/benchmark-data-combined-tiny
 /mix_eval/data/test/
 /mix_eval/data/model_responses/*
 !mix_eval/data/model_responses/gemma_11_7b_instruct
