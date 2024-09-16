@@ -19,8 +19,8 @@ This is a fork of the original MixEval repository. The original repository can b
 ## Getting started 
 
 ```bash
-# Fork with more losely dependencies
-pip install git+https://github.com/philschmid/MixEval --upgrade
+pip install vllm
+pip install -e .
 ```
 
 _Note: If you want to evaluate models that are not included Take a look [here](https://github.com/philschmid/MixEval?tab=readme-ov-file#registering-new-models). Zephyr example [here](https://github.com/philschmid/MixEval/blob/main/mix_eval/models/zephyr_7b_beta.py)._
@@ -45,7 +45,7 @@ MODEL_PARSER_API=$(echo $OPENAI_API_KEY) python -m mix_eval.evaluate \
 
 1. start you environment
 ```bash
-python -m vllm.entrypoints.openai.api_server --model alignment-handbook/zephyr-7b-dpo-full
+vllm serve alignment-handbook/zephyr-7b-dpo-full
 ```
 
 2. run the following command
