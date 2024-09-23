@@ -54,6 +54,10 @@ def parse_args():
         type=str,
         default=None,
         help="The model revision to use. If not specified, the latest revision will be used."
+        "--model_systemprompt", 
+        type=str, 
+        required=False, 
+        help="Model systemprompt available for local_chat model"
         )
     parser.add_argument(
         "--benchmark", 
@@ -88,6 +92,12 @@ def parse_args():
         default=100, 
         help="Number of parallel threads for calling the model parser api if use model parsing." 
         "If you hit rate limit error frequently, try to reduce this number."
+        )
+    parser.add_argument(
+        "--api_base_url", 
+        type=str, 
+        default=None, 
+        help="The base url for the model parser api."
         )
     parser.add_argument(
         "--data_path", 

@@ -10,6 +10,7 @@ You can find more information and access the MixEval leaderboard [here](https://
 
 This is a fork of the original MixEval repository. The original repository can be found [here](https://github.com/Psycoy/MixEval/). I created this fork to make the integration and use of MixEval easier during the training of new models. This Fork includes several improved feature to make usages easier and more flexible. Including:
 
+
 * Evaluation of Local Models during or post trainig with `transformers` 
 * Hugging Face Datasets integration to avoid the need of local files. 
 * Use of Hugging Face TGI or vLLM to accelerate evaluation and making it more manageable
@@ -33,8 +34,6 @@ _Note: If you want to evaluate models that are not included Take a look [here](h
 ```bash
 vllm serve HuggingFaceH4/zephyr-7b-beta
 ```
-
-1. run the following command
 
 ```bash
 MODEL_PARSER_API=$(echo $OPENAI_API_KEY) API_URL=http://localhost:8000/v1 python -m mix_eval.evaluate \

@@ -7,21 +7,16 @@ setup(
     author_email='jinjieni@nus.edu.sg',
     packages=find_packages(),
     install_requires=[
-        'transformers>=4.41.0',
-        'tiktoken>=0.6.0',
         'fschat>=0.2.36',
+        'transformers>=4.43.1',
+        'tiktoken>=0.6.0',
         'SentencePiece>=0.2.0',
         'accelerate>=0.30.1',
         'pandas>=2.2.2',
         'scikit-learn>=1.5.0',
         'hf_transfer>=0.1.6',
         'openai>=1.30.5',
-        'httpx',
-        'nltk',
-        'numpy',
-        'tqdm',
         'protobuf',
-        'python-dotenv',
         'anthropic',
         'mistralai',
         'google-generativeai',
@@ -30,7 +25,32 @@ setup(
         'dashscope',
         'fastapi >= 0.114.1', # To avoid this bug https://github.com/vllm-project/vllm/issues/8212
         'pydantic >= 2.9.0'
+        'httpx>=0.27.0',
+        'nltk>=3.8.1',
+        'numpy>=1.26.3',
+        'tqdm>=4.66.4',
+        'python-dotenv>=1.0.1',
+        "prettytable"
+        # Andere Dependencies, die immer benötigt werden
     ],
+    extras_require={
+        'online_model_outside_openai_and_hf': [
+            'anthropic>=0.28.0',
+            'mistralai>=0.3.0',
+            'google-generativeai>=0.5.4',
+            'google-cloud-aiplatform>=1.53.0',
+            'reka-api>=2.0.0',
+            'dashscope>=1.19.2',
+            'tiktoken>=0.6.0',
+            'fschat>=0.2.36',
+            'SentencePiece>=0.2.0',
+            # Andere optionalen Dependencies
+        ],
+        'potentially not used': [
+            'fschat>=0.2.36',       
+        ]
+        # Andere Gruppen von optionalen Dependencies
+    },
     package_data={
     },
     entry_points={

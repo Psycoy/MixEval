@@ -21,6 +21,7 @@ import time
 import warnings
 warnings.simplefilter("ignore", category=DeprecationWarning)
 warnings.simplefilter("ignore", category=FutureWarning)
+from prettytable import PrettyTable
 
 import mix_eval.api.registry
 from mix_eval.utils.common_utils import set_seed
@@ -85,6 +86,12 @@ def parse_args():
         default="model", 
         choices=["model", "rule"], 
         help="Parser for multiple-choice responses, either model parser or rule-based parser."
+        )
+    parser.add_argument(
+        "--api_base_url", 
+        type=str, 
+        default=None, 
+        help="The base url for the model parser api."
         )
     parser.add_argument(
         "--api_parallel_num", 
@@ -154,11 +161,16 @@ def compute_metric_closeended_freeform_modelparse_from_judgefile(args):
                 if judge_dict['benchmark_name'] not in score_dict_model:
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
-            
+
+        
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
-    
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     return score_dict
 
 def compute_metric_closeended_freeform_ruleparse_from_judgefile(args):
@@ -202,9 +214,14 @@ def compute_metric_closeended_freeform_ruleparse_from_judgefile(args):
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     
     return score_dict
 
@@ -260,9 +277,14 @@ def compute_metric_closeended_multichoice_modelparse_from_judgefile(args):
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     
     return score_dict
 
@@ -310,9 +332,14 @@ def compute_metric_closeended_multichoice_ruleparse_from_judgefile(args):
                     score_dict_model[judge_dict['benchmark_name']] = []
                 score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
     
     return score_dict
 
@@ -372,10 +399,15 @@ def compute_metric_closeended_freeform_modelparse(args):
             if judge_dict['benchmark_name'] not in score_dict_model:
                 score_dict_model[judge_dict['benchmark_name']] = []
             score_dict_model[judge_dict['benchmark_name']].append(judge_score)
-            
+
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
 
         with open(os.path.join(args.model_response_dir, 
                                model, 
@@ -461,10 +493,15 @@ def compute_metric_closeended_freeform_ruleparse(args):
             if judge_dict['benchmark_name'] not in score_dict_model:
                 score_dict_model[judge_dict['benchmark_name']] = []
             score_dict_model[judge_dict['benchmark_name']].append(judge_score)
-            
+
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
         
         with open(os.path.join(args.model_response_dir, 
                                model, 
@@ -570,9 +607,14 @@ def compute_metric_closeended_multichoice_modelparse(args):
                 score_dict_model[judge_dict['benchmark_name']] = []
             score_dict_model[judge_dict['benchmark_name']].append(judge_score)
             
+        score_dict_counts = {}
+
         for key, value in score_dict_model.items():
+            score_dict_counts[key] = len(value)
             score_dict_model[key] = round(sum(value)/len(value), 3)
-        score_dict[model] = score_dict_model
+
+        score_dict[model] = score_dict_model 
+        score_dict[model]["number_samples"] = score_dict_counts
         
         with open(os.path.join(args.model_response_dir, 
                                model, 
@@ -696,8 +738,7 @@ def compute_metric_closeended_multichoice(args):
     if args.multi_choice_parser == "model":
         return compute_metric_closeended_multichoice_modelparse(args)
     else:
-        return compute_metric_closeended_multichoice_ruleparse(args)
-                
+        return compute_metric_closeended_multichoice_ruleparse(args)                
 
 def dict_to_markdown_table(data):
     # Separate overall score from other metrics
@@ -720,6 +761,20 @@ def dict_to_markdown_table(data):
     
     return markdown
 
+
+def print_table(data_dict):
+    # Create a table
+    table = PrettyTable()
+    
+    # Set the column names
+    table.field_names = ["Split", "Score"]
+    
+    # Add rows from the dictionary
+    for key, value in data_dict.items():
+        table.add_row([key, value])
+    
+    # Print the table
+    print(table) 
                 
 def compute_metric(args):
     score_dict_ff = compute_metric_closeended_freeform(args)
@@ -734,6 +789,7 @@ def compute_metric(args):
               f"split of these models: \n{missing_models}\n\nA possible reason may be that they lack a model answer file. "
               "Skipping them...")
     
+    score_dict = {}
     for model in common_models:
         score_dir = os.path.join(
             args.model_response_dir, 
@@ -741,15 +797,24 @@ def compute_metric(args):
             args.benchmark,
             args.version,
             )
-        score_dict_model = {
-            "overall score (final score)": (score_dict_ff[model]['overall'] + score_dict_mp[model]['overall']) / 2,
-            **{k:v for k, v in score_dict_ff[model].items() if k != "overall"},
-            **{k:v for k, v in score_dict_mp[model].items() if k != "overall"},
-            }
+        
+        tmp_score_dict_model = {}
+        for k in set(score_dict_mp[model].keys()).union(set(score_dict_ff[model].keys())):
+            if k == "number_samples":
+                continue
+            sd_mp_l = score_dict_mp[model]["number_samples"].get(k, 0)
+            sd_ff_l = score_dict_ff[model]["number_samples"].get(k, 0)
+
+            tmp_score_dict_model[k] = score_dict_ff[model].get(k, 0) * (sd_ff_l/(sd_ff_l+sd_mp_l)) + score_dict_mp[model].get(k, 0) * (sd_mp_l/(sd_ff_l+sd_mp_l))
+
+        score_dict[model] = tmp_score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
             f.write(json.dumps(score_dict_model, indent=4) + "\n")
         print(dict_to_markdown_table(score_dict_model))    
     
+    print(f"Saving the model scores to {os.path.join(args.model_response_dir, 'score.json')} ...")
+    with open(os.path.join(args.model_response_dir, "score.json"), "w") as f:
+        f.write(json.dumps(score_dict, indent=4) + "\n")
     
 def compute_metrics_p(args):
     # to be called in evaluate.py

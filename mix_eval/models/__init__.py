@@ -38,6 +38,8 @@ AVAILABLE_MODELS = {
     "gemma_7b": "Gemma_7B",
     "gemma_11_2b_instruct": "Gemma_11_2B_Instruct",
     "gemma_11_7b_instruct": "Gemma_11_7B_Instruct",
+    "gemma_2_9b_instruct": "Gemma_2_9B_Instruct",
+    "gemma_2_27b_instruct": "Gemma_2_27B_Instruct",
     
     "mistral_7b": "Mistral_7B",
     "mixtral_8_7b": "Mixtral_8_7B",
@@ -97,14 +99,19 @@ AVAILABLE_MODELS = {
     "gpt_4_0125_preview": "GPT_4_0125_Preview",
     "gpt_4_1106_preview": "GPT_4_1106_Preview",
     "gpt_4o": "GPT_4o",
+    "gpt_4o_mini": "GPT_4o_Mini",
     
     "claude_3_haiku": "Claude_3_Haiku",
     "claude_3_sonnet": "Claude_3_Sonnet",
     "claude_3_opus": "Claude_3_Opus",
+    "claude_3_5_sonnet": "Claude_3_5_Sonnet",
     
     "mistral_small": "Mistral_Small",
     "mistral_medium": "Mistral_Medium",
     "mistral_large": "Mistral_Large",
+    "mistral_large_2": "Mistral_Large_2",
+    "mistral_nemo": "Mistral_Nemo",
+    
     
     "gemini_10_pro": "Gemini_10_Pro",
     "gemini_15_pro": "Gemini_15_Pro",
@@ -151,6 +158,9 @@ AVAILABLE_MODELS = {
     "xwin_lm_7b_v01": "XWin_LM_7B_V01",
     "local_chat": "LocalChatModel",
     "local_api": "LocalApi"
+    
+    "local_chat": "LocalChatModel",
+    "local_base": "LocalBaseModel",
     
 }
 

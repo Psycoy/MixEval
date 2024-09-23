@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 
 from concurrent.futures import ThreadPoolExecutor
-from openai import OpenAI
+from openai import OpenAI, AzureOpenAI
 from openai._exceptions import RateLimitError, BadRequestError
 from httpx import Timeout
 
@@ -23,10 +23,20 @@ class ChatGPTJudgeCloseendMultichoice:
         self.MAX_NEW_TOKENS = 999
 
         load_dotenv()
-        self.client = OpenAI(
-            api_key=os.getenv('MODEL_PARSER_API'),
-            timeout=Timeout(timeout=20.0, connect=5.0)
-        )
+        if os.getenv('MODEL_PARSER_API'):
+            self.client = OpenAI(
+                api_key=os.getenv('MODEL_PARSER_API'),
+                base_url=args.api_base_url,
+                timeout=Timeout(timeout=60.0, connect=5.0)
+            )
+        elif os.getenv('OPENAI_API_TYPE')=="azure":
+            self.client = AzureOpenAI(
+                api_version=os.getenv('OPENAI_API_VERSION'),
+                azure_endpoint=os.getenv('OPENAI_API_BASE'),
+                api_key=os.getenv('OPENAI_API_KEY'),
+            )
+        else:
+            raise RuntimeError("No correct judge endpoint specified in .env, see ReadMe")
 
     def format_prompts(self, inputs):
         prompt, options, response = inputs
