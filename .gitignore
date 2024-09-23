@@ -5,6 +5,11 @@
 !mix_eval/data/model_responses/gemma_11_7b_instruct
 /mix_eval/eval_scripts
 build_dynamic_benchmark_version_control.sh
+__pycache__/
+
+# MixEval stuff
+results/
+
 .env
 .vscode
 *.DS_Store
