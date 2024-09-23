@@ -28,6 +28,8 @@ setup(
         'google-cloud-aiplatform',
         'reka-api',
         'dashscope',
+        'fastapi >= 0.114.1', # To avoid this bug https://github.com/vllm-project/vllm/issues/8212
+        'pydantic >= 2.9.0'
     ],
     package_data={
     },

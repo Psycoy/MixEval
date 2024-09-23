@@ -19,42 +19,28 @@ This is a fork of the original MixEval repository. The original repository can b
 ## Getting started 
 
 ```bash
-# Fork with more losely dependencies
-pip install git+https://github.com/philschmid/MixEval --upgrade
+pip install vllm
+pip install -e .
 ```
 
 _Note: If you want to evaluate models that are not included Take a look [here](https://github.com/philschmid/MixEval?tab=readme-ov-file#registering-new-models). Zephyr example [here](https://github.com/philschmid/MixEval/blob/main/mix_eval/models/zephyr_7b_beta.py)._
 
 ## Evaluation open LLMs
 
-**Remote Hugging Face model with existing config:**
-
-```bash
-# MODEL_PARSER_API=<your openai api key
-MODEL_PARSER_API=$(echo $OPENAI_API_KEY) python -m mix_eval.evaluate \
-    --data_path hf://zeitgeist-ai/mixeval \
-    --model_name zephyr_7b_beta \
-    --benchmark mixeval_hard \
-    --version 2024-06-01 \
-    --batch_size 20 \
-    --output_dir results \
-    --api_parallel_num 20
-```
-
 **Using vLLM/TGI with hosted or local API:**
 
 1. start you environment
 ```bash
-python -m vllm.entrypoints.openai.api_server --model alignment-handbook/zephyr-7b-dpo-full
+vllm serve HuggingFaceH4/zephyr-7b-beta
 ```
 
-2. run the following command
+1. run the following command
 
 ```bash
 MODEL_PARSER_API=$(echo $OPENAI_API_KEY) API_URL=http://localhost:8000/v1 python -m mix_eval.evaluate \
     --data_path hf://zeitgeist-ai/mixeval \
     --model_name local_api \
-    --model_path alignment-handbook/zephyr-7b-dpo-full \
+    --model_path HuggingFaceH4/zephyr-7b-beta \
     --benchmark mixeval_hard \
     --version 2024-06-01 \
     --batch_size 20 \
@@ -102,6 +88,20 @@ MODEL_PARSER_API=$(echo $OPENAI_API_KEY) python -m mix_eval.evaluate \
     --benchmark mixeval_hard \
     --version 2024-06-01 \
     --batch_size 20 \
+    --api_parallel_num 20
+```
+
+**Remote Hugging Face model with existing config:**
+
+```bash
+# MODEL_PARSER_API=<your openai api key
+MODEL_PARSER_API=$(echo $OPENAI_API_KEY) python -m mix_eval.evaluate \
+    --data_path hf://zeitgeist-ai/mixeval \
+    --model_name zephyr_7b_beta \
+    --benchmark mixeval_hard \
+    --version 2024-06-01 \
+    --batch_size 20 \
+    --output_dir results \
     --api_parallel_num 20
 ```
 
