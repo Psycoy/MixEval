@@ -27,7 +27,7 @@ This is a fork of the original MixEval repository. The original repository can b
 
 ```bash
 pip install vllm
-pip install -e .
+pip install git+https://github.com/philschmid/MixEval --upgrade
 ```
 
 _Note: If you want to evaluate models that are not included Take a look [here](https://github.com/philschmid/MixEval?tab=readme-ov-file#registering-new-models). Zephyr example [here](https://github.com/philschmid/MixEval/blob/main/mix_eval/models/zephyr_7b_beta.py)._
@@ -47,12 +47,40 @@ MODEL_PARSER_API=$(echo $OPENAI_API_KEY) API_URL=http://localhost:8000/v1 python
     --model_name local_api \
     --model_path HuggingFaceH4/zephyr-7b-beta \
     --benchmark mixeval_hard \
-    --version 2024-06-01 \
+    --version 2024-08-11 \
     --batch_size 20 \
     --output_dir results \
     --api_parallel_num 20
 ```
 
+Results: `2024-08-11` version
+
+```bash
+| Metric        | Score  |
+| ------------- | ------ |
+| PIQA          | 75.00% |
+| ARC           | 66.70% |
+| DROP          | 62.10% |
+| BBH           | 59.50% |
+| GSM8k         | 58.60% |
+| BoolQ         | 53.10% |
+| WinoGrande    | 50.00% |
+| MATH          | 49.20% |
+| CommonsenseQA | 47.10% |
+| TriviaQA      | 44.00% |
+| AGIEval       | 41.39% |
+| HellaSwag     | 36.10% |
+| GPQA          | 33.30% |
+| MMLU          | 32.20% |
+| SIQA          | 30.80% |
+| OpenBookQA    | 25.00% |
+| MMLU-Pro      | 20.00% |
+| overall       | 42.55% |
+
+Total time: 419.3241469860077
+```
+
+Results: `2024-06-01` version
 
 ```bash
 | Metric        | Score  |
@@ -92,11 +120,6 @@ MODEL_PARSER_API=$(echo $OPENAI_API_KEY) API_URL=http://localhost:8000/v1 python
     --output_dir results \
     --api_parallel_num 20
 ```
-
-1. Results
-
-
-Takes around 5 minutes to evaluate.
 
 **Local Hugging Face model from path:**
 

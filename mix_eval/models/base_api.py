@@ -16,7 +16,7 @@ class APIModelBase:
         self.get_model_message = lambda response: {"role": "assistant", "content": response}
 
     def _decode(self, inputs):
-        if hasattr(self, 'system_message'):
+        if getattr(self, "system_message", None):
             inputs.insert(0, self.system_message)
         
         completion = self.client.chat.completions.create(
