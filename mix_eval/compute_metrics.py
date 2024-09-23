@@ -742,23 +742,23 @@ def compute_metric_closeended_multichoice(args):
 
 def dict_to_markdown_table(data):
     # Separate overall score from other metrics
-    overall_score = data.pop("overall score (final score)")
-    
+    overall_score = data.pop("overall")
+
     # Sort the remaining items by value in descending order
     sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
-    
+
     # Add overall score back at the end
-    sorted_data.append(("overall score (final score)", overall_score))
-    
+    sorted_data.append(("overall", overall_score))
+
     # Create the header
     markdown = "| Metric | Score |\n|--------|-------|\n"
-    
+
     # Add each item to the table
     for key, value in sorted_data:
         # Format the value as a percentage with 2 decimal places
         formatted_value = f"{value:.2%}"
         markdown += f"| {key} | {formatted_value} |\n"
-    
+
     return markdown
 
 
@@ -809,8 +809,8 @@ def compute_metric(args):
 
         score_dict[model] = tmp_score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
-            f.write(json.dumps(score_dict_model, indent=4) + "\n")
-        print(dict_to_markdown_table(score_dict_model))    
+            f.write(json.dumps(tmp_score_dict_model, indent=4) + "\n")
+        print(dict_to_markdown_table(tmp_score_dict_model))    
     
     print(f"Saving the model scores to {os.path.join(args.model_response_dir, 'score.json')} ...")
     with open(os.path.join(args.model_response_dir, "score.json"), "w") as f:

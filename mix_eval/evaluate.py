@@ -54,11 +54,12 @@ def parse_args():
         type=str,
         default=None,
         help="The model revision to use. If not specified, the latest revision will be used."
-        "--model_systemprompt", 
-        type=str, 
-        required=False, 
-        help="Model systemprompt available for local_chat model"
-        )
+    parser.add_argument(
+        "--model_systemprompt",
+        type=str,
+        required=False,
+        help="Model systemprompt available for local_chat model",
+    )
     parser.add_argument(
         "--benchmark", 
         type=str, 
