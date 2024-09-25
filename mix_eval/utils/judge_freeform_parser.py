@@ -144,3 +144,77 @@ class ClaudeJudgeCloseendFreeform:
 class GeminiJudgeCloseendFreeform:
     def __init__(self):
         raise NotImplementedError
+    
+########################HF-Model########################
+class OSJudgeCloseendFreeform:
+    import time
+    from concurrent.futures import ThreadPoolExecutor
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from tqdm import tqdm
+    def __init__(self, args):
+        self.args = args
+        self.JUDGE = args.freeform_judge
+        self.FIX_INTERVAL_SECOND = 0
+        self.MAX_NEW_TOKENS = 999
+
+        # Load the Hugging Face model and tokenizer
+        self.tokenizer = AutoTokenizer.from_pretrained(self.JUDGE)
+        self.model = AutoModelForCausalLM.from_pretrained(self.JUDGE)
+
+    def format_prompts(self, inputs):
+        prompt, gold_ans, response = inputs
+        gold_ans = '; '.join([f"<answer {i+1}> {ans}" for i, ans in enumerate(gold_ans)])
+        formated = gpt_judge_for_closeended_freeform(prompt, gold_ans, response)
+        return formated
+    
+    def _GPT_decode(self, inputs):
+        prompt_text = self.format_prompts(inputs)
+        inputs = self.tokenizer(prompt_text, return_tensors='pt')
+        outputs = self.model.generate(**inputs, max_new_tokens=self.MAX_NEW_TOKENS)
+        completion = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        time.sleep(self.FIX_INTERVAL_SECOND)
+        return completion
+
+    def GPT_decode(self, inputs):
+        try:
+            completion = self._GPT_decode(inputs)
+            return completion
+        except Exception as e:
+            print(f"Error in GPT_decode: {e}")
+            return 'Error'
+
+    def annotate_p(self, task):    
+        prompt = task['prompt']
+        gold_ans = task['target']
+        response = task['response']
+        
+        if hasattr(self.args, 'model_type') and self.args.model_type == 'BaseModel':
+            response = extract_basemodel_response_3e(response)
+            task['response_extracted'] = response
+        
+        if not isinstance(gold_ans, list):
+            print(f"Invalid target: {gold_ans}")
+            return None
+        
+        inputs = (prompt, gold_ans, response)
+        
+        completion = self.GPT_decode(inputs)
+        if completion == 'Error':
+            print(f"Error in GPT_decode, the entry {task} will be retried later...")
+            task['judge_response'] = None
+            return task
+        
+        task['judge_response'] = completion
+        return task
+
+    def annotate_parallel(self, tasks):
+        print(f"Parsing in parallel, in total {self.args.api_parallel_num} threads.")
+        results = []
+        with ThreadPoolExecutor(self.args.api_parallel_num) as executor:
+            for entry in tqdm(
+                executor.map(self.annotate_p, tasks), total=len(tasks)
+            ):
+                results.append(entry)
+        if None in results:
+            raise ValueError("Some entries are not annotated due to errors in annotate_p, please inspect and retry.")
+        return results

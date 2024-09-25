@@ -51,6 +51,13 @@ def parse_args():
         help="The benchmark version to run. We update MixEval data points on a monthly basis."
         )
     parser.add_argument(
+        "--judge_llm_model_path", 
+        type=str, 
+        required=False, 
+        default=None,
+        help="Path to local judge llm model, if set, local judge model is used and not only api."
+        )
+    parser.add_argument(
         "--model_response_dir", 
         type=str, 
         default="mix_eval/data/model_responses/", 
@@ -755,6 +762,10 @@ def print_table(data_dict):
     print(table) 
                 
 def compute_metric(args):
+
+    if args.judge_llm_model_path:
+        args.freeform_judge = str(args.judge_llm_model_path).replace("/","_")
+
     score_dict_ff = compute_metric_closeended_freeform(args)
     score_dict_mp = compute_metric_closeended_multichoice(args)
     
