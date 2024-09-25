@@ -166,7 +166,11 @@ for model_name, model_class in AVAILABLE_MODELS.items():
     try:
         exec(f"from .{model_name} import {model_class}")
     except ImportError as e:
-        print(e)
+        # print(e)
+        if model_name in e.msg:
+            print(f"Model {model_name} not found.")
+        elif model_class in e.msg:
+            print(f"Model {model_class} not found.")
         pass
     
     

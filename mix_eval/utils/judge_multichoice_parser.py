@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 from openai import OpenAI, AzureOpenAI
 from openai._exceptions import RateLimitError, BadRequestError
 from httpx import Timeout
-
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from mix_eval.prompts.judge_prompts import gpt_judge_for_closeended_multiplechoice
 from mix_eval.utils.common_utils import extract_basemodel_response_2e
 
@@ -165,6 +165,7 @@ class OSJudgeCloseendMultichoice:
 
         # Load the Hugging Face model and tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(self.JUDGE)
+        self.tokenizer.padding_side = "left"
         self.model = AutoModelForCausalLM.from_pretrained(self.JUDGE)
 
     def format_prompts(self, inputs):
@@ -181,6 +182,7 @@ class OSJudgeCloseendMultichoice:
         option_letters = [chr(ord("A") + i) for i in range(len(options))]
         options_str = "\n".join([f"{option_letter}. {option}" for option_letter, option in zip(option_letters, options)])
         formatted_prompt = gpt_judge_for_closeended_multiplechoice(prompt, options_str, response)
+        formatted_prompt = self.tokenizer.apply_chat_template(formatted_prompt, add_generation_prompt=True, tokenize=False)
         return formatted_prompt
 
     def batch_GPT_decode(self, batch_inputs):
@@ -197,7 +199,7 @@ class OSJudgeCloseendMultichoice:
         inputs = self.tokenizer.batch_encode_plus(prompt_texts, return_tensors='pt', padding=True, truncation=True)
         outputs = self.model.generate(**inputs, max_new_tokens=self.MAX_NEW_TOKENS)
         completions = [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
-        time.sleep(self.FIX_INTERVAL_SECOND)
+        # time.sleep(self.FIX_INTERVAL_SECOND)
         return completions
 
     def annotate_p(self, task):
