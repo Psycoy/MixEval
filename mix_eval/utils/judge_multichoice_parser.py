@@ -196,6 +196,8 @@ class OSJudgeCloseendMultichoice:
             List[str]: List of decoded completions.
         """
         prompt_texts = [self.format_prompts(inputs) for inputs in batch_inputs]
+        if not self.tokenizer.pad_token:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
         inputs = self.tokenizer.batch_encode_plus(prompt_texts, return_tensors='pt', padding=True, truncation=True)
         outputs = self.model.generate(**inputs, max_new_tokens=self.MAX_NEW_TOKENS)
         outputs = outputs[:,inputs["input_ids"].shape[1]:]
