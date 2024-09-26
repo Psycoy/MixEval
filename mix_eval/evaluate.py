@@ -50,7 +50,7 @@ def parse_args():
         help="Path to local model, only work with model_name='local_chat'."
         )
     parser.add_argument(
-        "--judge_llm_model_path", 
+        "--judge_model_id", 
         type=str, 
         required=False, 
         default=None,
