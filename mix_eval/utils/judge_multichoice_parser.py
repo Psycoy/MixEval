@@ -160,13 +160,13 @@ class OSJudgeCloseendMultichoice:
         self.args = args
         self.JUDGE = args.multichoice_judge
         self.FIX_INTERVAL_SECOND = 0
-        self.MAX_NEW_TOKENS = 999
+        self.MAX_NEW_TOKENS = 256
         self.BATCH_SIZE = args.batch_size  # Define batch size
 
         # Load the Hugging Face model and tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(self.JUDGE)
         self.tokenizer.padding_side = "left"
-        self.model = AutoModelForCausalLM.from_pretrained(self.JUDGE)
+        self.model = AutoModelForCausalLM.from_pretrained(self.JUDGE, device_map = 'cuda')
 
     def format_prompts(self, inputs):
         """
@@ -199,6 +199,7 @@ class OSJudgeCloseendMultichoice:
         if not self.tokenizer.pad_token:
             self.tokenizer.pad_token = self.tokenizer.eos_token
         inputs = self.tokenizer.batch_encode_plus(prompt_texts, return_tensors='pt', padding=True, truncation=True)
+        inputs = {k:v.cuda() for k,v in inputs.items()}
         outputs = self.model.generate(**inputs, max_new_tokens=self.MAX_NEW_TOKENS)
         outputs = outputs[:,inputs["input_ids"].shape[1]:]
         completions = [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
