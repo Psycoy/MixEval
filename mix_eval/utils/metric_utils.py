@@ -114,7 +114,7 @@ def is_option(variable):
 def parse_multi_choice_response_model(args, tasks):
     tasks_remained = tasks
     tasks_judged = []
-    if args.judge_llm_model_path:
+    if args.judge_model_id:
         model_judge = OSJudgeCloseendMultichoice(args)
     else:
         model_judge = ChatGPTJudgeCloseendMultichoice(args)
@@ -292,7 +292,7 @@ def get_score_from_judge(judge_response):
 def parse_freeform_response_model(args, tasks):
     tasks_remained = tasks
     tasks_judged = []
-    if args.judge_llm_model_path:
+    if args.judge_model_id:
         model_judge = OSJudgeCloseendFreeform(args)
     else:
         model_judge = ChatGPTJudgeCloseendFreeform(args)
