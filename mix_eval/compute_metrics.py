@@ -51,7 +51,7 @@ def parse_args():
         help="The benchmark version to run. We update MixEval data points on a monthly basis."
         )
     parser.add_argument(
-        "--judge_llm_model_path", 
+        "--judge_model_id", 
         type=str, 
         required=False, 
         default=None,
