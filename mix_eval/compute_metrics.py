@@ -763,9 +763,9 @@ def print_table(data_dict):
                 
 def compute_metric(args):
 
-    if args.judge_llm_model_path:
-        args.freeform_judge = str(args.judge_llm_model_path)
-        args.multichoice_judge = str(args.judge_llm_model_path)
+    if args.judge_model_id:
+        args.freeform_judge = str(args.judge_model_id)
+        args.multichoice_judge = str(args.judge_model_id)
 
     score_dict_ff = compute_metric_closeended_freeform(args)
     score_dict_mp = compute_metric_closeended_multichoice(args)
