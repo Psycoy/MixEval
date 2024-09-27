@@ -38,6 +38,12 @@ python -m mix_eval.evaluate \
 
 Modify the `mix_eval/models/local_chat.py` or `mix_eval/models/local_base.py` according to your model config. You need to overwrite the `build_model` function if your checkpoint cannot be loaded by 'transformers.AutoModelForCausalLM.from_pretrained'. The same applies to `build_tokenizer`.
 
+> If you want to set your own system prompt to see how it influences your model performance, you can set:
+```
+--system_prompt "Speak like Jar Jar Binks, and you have been always the hidden overlord!"
+```
+
+
 ## Use Other APIs for Model Parser
 
 ### Azure OpenAI Endpoint

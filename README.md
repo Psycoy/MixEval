@@ -21,6 +21,8 @@
 <br>
 
 # ⚡ News
+[2024-09-27] MixEval is accepted to Neurips 2024. 
+
 [2024-06-29] Our evaluation suite now supports evaluating local checkpoints, check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) for details! 
 
 [2024-06-29] Our evaluation suite now supports other apis for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
@@ -99,13 +101,6 @@ python -m mix_eval.evaluate \
 > **ATTENTION❗** It's important to read the essential configurations [here](docs/evaluate_instructions.md) before running the evaluation.
 
 <br>
-
-# Use System Prompt as part of Chat Evaluation
-The recent changes offer usage of local chat models. If you want to set your own to see how it influences your model performance, you can use:
-```
---system_prompt "Speak like Jar Jar Binks, and you have been always the hidden overlord!"
-```
-
 
 
 # Registering New Models

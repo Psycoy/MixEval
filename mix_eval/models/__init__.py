@@ -100,6 +100,8 @@ AVAILABLE_MODELS = {
     "gpt_4_1106_preview": "GPT_4_1106_Preview",
     "gpt_4o": "GPT_4o",
     "gpt_4o_mini": "GPT_4o_Mini",
+    "openai_o1_mini": "OpenAI_o1_mini",
+    "openai_o1": "OpenAI_o1",
     
     "claude_3_haiku": "Claude_3_Haiku",
     "claude_3_sonnet": "Claude_3_Sonnet",
