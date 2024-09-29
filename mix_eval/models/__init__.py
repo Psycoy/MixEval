@@ -25,6 +25,7 @@ AVAILABLE_MODELS = {
     "qwen_max_0428": "Qwen_Max_0428",
     "qwen_2_7b_instruct": "Qwen_2_7B_Instruct",
     "qwen_2_72b_instruct": "Qwen_2_72B_Instruct",
+    "qwen_2_5_72b_instruct": "Qwen_2_5_72B_Instruct",
     
     "yi_6b": "Yi_6B",
     "yi_34b": "Yi_34B",
