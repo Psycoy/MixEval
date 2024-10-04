@@ -10,6 +10,8 @@ AVAILABLE_MODELS = {
     "llama_3_70b": "Llama_3_70B",
     "llama_3_70b_instruct": "Llama_3_70B_Instruct",
     
+    "llama_3_8b_instruct_vllm": "Llama_3_8B_Instruct_vLLM",
+
     "qwen_15_4b": "Qwen_15_4B",
     "qwen_15_7b": "Qwen_15_7B",
     "qwen_15_32b": "Qwen_15_32B",
