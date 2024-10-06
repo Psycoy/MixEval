@@ -50,6 +50,13 @@ def parse_args():
         help="Path to local model, only work with model_name='local_chat'."
         )
     parser.add_argument(
+        "--judge_model_id", 
+        type=str, 
+        required=False, 
+        default=None,
+        help="Path to local judge llm model, if set, local judge model is used and not only api."
+        )
+    parser.add_argument(
         "--model_systemprompt", 
         type=str, 
         required=False, 

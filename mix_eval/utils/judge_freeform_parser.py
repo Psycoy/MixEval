@@ -8,6 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 from openai import OpenAI, AzureOpenAI
 from openai._exceptions import RateLimitError, BadRequestError
 from httpx import Timeout
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from mix_eval.prompts.judge_prompts import gpt_judge_for_closeended_freeform
 from mix_eval.utils.common_utils import extract_basemodel_response_3e
@@ -144,3 +145,136 @@ class ClaudeJudgeCloseendFreeform:
 class GeminiJudgeCloseendFreeform:
     def __init__(self):
         raise NotImplementedError
+    
+########################HF-Model########################
+class OSJudgeCloseendFreeform:
+
+    def __init__(self, args):
+        """
+        Initialize the OSJudgeCloseendFreeform class.
+
+        Args:
+            args: Argument parser object containing necessary parameters.
+        """
+        self.args = args
+        self.JUDGE = args.freeform_judge
+        self.FIX_INTERVAL_SECOND = 0
+        self.MAX_NEW_TOKENS = 256
+        self.BATCH_SIZE = args.batch_size  # Define batch size
+
+        # Load the Hugging Face model and tokenizer
+        self.tokenizer = AutoTokenizer.from_pretrained(self.JUDGE)
+        self.tokenizer.padding_side="left"
+        self.model = AutoModelForCausalLM.from_pretrained(self.JUDGE, device_map = 'cuda')
+
+    def format_prompts(self, inputs):
+        """
+        Format the inputs into a prompt suitable for the model.
+
+        Args:
+            inputs: Tuple containing the prompt, gold_ans, and response.
+
+        Returns:
+            str: Formatted prompt.
+        """
+        prompt, gold_ans, response = inputs
+        gold_ans = '; '.join([f"<answer {i+1}> {ans}" for i, ans in enumerate(gold_ans)])
+        formatted_prompt = gpt_judge_for_closeended_freeform(prompt, gold_ans, response)
+        formatted_prompt = self.tokenizer.apply_chat_template(formatted_prompt, add_generation_prompt=True, tokenize=False)
+        return formatted_prompt
+    
+    def batch_GPT_decode(self, batch_inputs):
+        """
+        Perform batch decoding using the Hugging Face model.
+
+        Args:
+            batch_inputs: List of formatted prompts.
+
+        Returns:
+            List[str]: List of decoded completions.
+        """
+        prompt_texts = [self.format_prompts(inputs) for inputs in batch_inputs]
+        print("prompt texts")
+        print(prompt_texts)
+        print("batch_inputs")
+        print(batch_inputs)
+        if not self.tokenizer.pad_token:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+        inputs = self.tokenizer.batch_encode_plus(prompt_texts, return_tensors='pt', padding=True, truncation=True)
+        inputs = {k:v.cuda() for k,v in inputs.items()}
+        print("inputs")
+        print(inputs)
+        print({k:v.shape for k,v in inputs.items()})
+ 
+        outputs = self.model.generate(**inputs, max_new_tokens=self.MAX_NEW_TOKENS)
+        outputs = outputs[:,inputs["input_ids"].shape[1]:]
+        print("outputs")
+        print(outputs)
+
+        completions = [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
+        # time.sleep(self.FIX_INTERVAL_SECOND)
+        return completions
+
+    def annotate_p(self, task):    
+        """
+        Prepare a single task for annotation.
+
+        Args:
+            task: Dictionary containing the task details.
+
+        Returns:
+            Tuple: Formatted inputs for the model.
+        """
+        prompt = task['prompt']
+        gold_ans = task['target']
+        response = task['response']
+        
+        if hasattr(self.args, 'model_type') and self.args.model_type == 'BaseModel':
+            response = extract_basemodel_response_3e(response)
+            task['response_extracted'] = response
+        
+        if not isinstance(gold_ans, list):
+            print(f"Invalid target: {gold_ans}")
+            return None
+        
+        return (prompt, gold_ans, response)
+
+    def annotate_parallel(self, tasks):
+        """
+        Annotate tasks in parallel using batch processing.
+
+        Args:
+            tasks: List of tasks to be annotated.
+
+        Returns:
+            List[dict]: List of annotated tasks.
+        """
+        print(f"Parsing in parallel with batch size {self.BATCH_SIZE}.")
+        results = []
+        batch_inputs = []
+        batch_tasks = []
+
+        for task in tqdm(tasks):
+            inputs = self.annotate_p(task)
+            if inputs is not None:
+                batch_inputs.append(inputs)
+                batch_tasks.append(task)
+
+            if len(batch_inputs) == self.BATCH_SIZE:
+                completions = self.batch_GPT_decode(batch_inputs)
+                for task, completion in zip(batch_tasks, completions):
+                    task['judge_response'] = completion
+                    results.append(task)
+                batch_inputs = []
+                batch_tasks = []
+
+        # Process remaining tasks in the last batch
+        if batch_inputs:
+            completions = self.batch_GPT_decode(batch_inputs)
+            for task, completion in zip(batch_tasks, completions):
+                task['judge_response'] = completion
+                results.append(task)
+
+        if None in results:
+            raise ValueError("Some entries are not annotated due to errors in annotate_p, please inspect and retry.")
+        return results
