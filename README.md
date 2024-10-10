@@ -173,7 +173,7 @@ If you want to separately compute the scores, you should
 
 > If you are using Azure or APIs for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
 
-> If you are parsing base models' responses, set the `--extract_base_model_response` flag to only retain the meaningful part in models' response to get more stablized parsing results.
+> If you are parsing base models' responses, set the `--extract_base_model_response` flag to only retain the meaningful part in models' response to get more stabilized parsing results.
 
 > If you finished the model parsing some time ago and now want to display the model results again, add `--compute_score_from_judged_file` flag to avoid calling the model parser api again to save your budget. You have to make sure that there exists the parsed files with the name of `judge_results_ff_model_judge_gpt-3.5-turbo-0125` and `judge_results_mp_model_judge_gpt-3.5-turbo-0125` under the target model response folder, where `gpt-3.5-turbo-0125` denotes the model parser name, `ff` denotes free-form, `mp` denotes multiple-choice.
 
