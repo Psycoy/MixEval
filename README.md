@@ -22,6 +22,8 @@
 <br>
 
 # ⚡ News
+[2024-10-20] MixEval-X is released! Checkout the [project page](https://mixeval-x.github.io/), [paper](https://arxiv.org/abs/2410.13754), and [github repo](https://github.com/Psycoy/MixEval-X/) to learn more about this real-world any-to-any benchmark!🌟
+
 [2024-09-27] MixEval is accepted to Neurips 2024. 
 
 [2024-06-29] Our evaluation suite now supports evaluating local checkpoints, check [here](docs/evaluate_instructions.md#evaluating-local-checkpoint) for details! 
