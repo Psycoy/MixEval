@@ -24,7 +24,7 @@
 # ⚡ News
 [2024-11-09] Our evaluation suite now supports local model parsers! Check [here](docs/evaluate_instructions.md#use-local-model-parser) for details! 
 
-[2024-10-20] MixEval-X is released! Checkout the [project page](https://mixeval-x.github.io/), [paper](https://arxiv.org/abs/2410.13754), and [github repo](https://github.com/Psycoy/MixEval-X/) to learn more about this real-world any-to-any benchmark!🌟 (Note that MixEval-X is the any-to-any version of MixEval while not including the text2text modality. **MixEval and MixEval-X are two separate evaluations.**)
+[2024-10-20] MixEval-X is released! Checkout the [project page](https://mixeval-x.github.io/), [paper](https://arxiv.org/abs/2410.13754), and [github repo](https://github.com/Psycoy/MixEval-X/) to learn more about this real-world any-to-any benchmark!🌟 (Note that MixEval-X is the any-to-any version of MixEval while not including the text2text modality. **❗MixEval and MixEval-X are two separate evaluations.❗**)
 
 [2024-09-27] MixEval is accepted to Neurips 2024. 
 
