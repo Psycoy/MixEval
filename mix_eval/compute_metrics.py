@@ -51,6 +51,13 @@ def parse_args():
         help="The benchmark version to run. We update MixEval data points on a monthly basis."
         )
     parser.add_argument(
+        "--judge_model_id", 
+        type=str, 
+        required=False, 
+        default=None,
+        help="Path to local judge llm model, if set, local judge model is used and not only api."
+        )
+    parser.add_argument(
         "--model_response_dir", 
         type=str, 
         default="mix_eval/data/model_responses/", 
@@ -146,7 +153,7 @@ def compute_metric_closeended_freeform_modelparse_from_judgefile(args):
             model, 
             args.benchmark, 
             args.version,
-            f"judge_results_ff_model_judge_{args.freeform_judge}.jsonl"
+            f"judge_results_ff_model_judge_{args.freeform_judge.replace('/', '_')}.jsonl"
             )
         if not os.path.exists(judge_file):
             print(f"Judge file not found: {judge_file}")
@@ -251,7 +258,7 @@ def compute_metric_closeended_multichoice_modelparse_from_judgefile(args):
             model, 
             args.benchmark, 
             args.version,
-            f"judge_results_mp_model_judge_{args.multichoice_judge}.jsonl"
+            f"judge_results_mp_model_judge_{args.multichoice_judge.replace('/', '_')}.jsonl"
             )
         if not os.path.exists(judge_file):
             print(f"Judge file not found: {judge_file}")
@@ -413,12 +420,12 @@ def compute_metric_closeended_freeform_modelparse(args):
                                model, 
                                args.benchmark, 
                                args.version,
-                               f"judge_results_ff_model_judge_{args.freeform_judge}.jsonl"), "w") as f:
+                               f"judge_results_ff_model_judge_{args.freeform_judge.replace('/', '_')}.jsonl"), "w") as f:
             for case in results:
                 f.write(json.dumps(case) + "\n")
         
-        print("Sleep 60 seconds to avoid ratelimit error ... ")
-        time.sleep(60)
+        # print("Sleep 60 seconds to avoid ratelimit error ... ")
+        # time.sleep(60)
     
     if args.verbose:
         print(f"[Close-ended Free-form Model Parser]")
@@ -620,13 +627,13 @@ def compute_metric_closeended_multichoice_modelparse(args):
                                model, 
                                args.benchmark, 
                                args.version,
-                               f"judge_results_mp_model_judge_{args.multichoice_judge}.jsonl"
+                               f"judge_results_mp_model_judge_{args.multichoice_judge.replace('/','_')}.jsonl"
                                ), "w") as f:
             for case in results:
                 f.write(json.dumps(case) + "\n")
                 
-        print("Sleep 60 seconds to avoid ratelimit error ... ")
-        time.sleep(60)
+        # print("Sleep 60 seconds to avoid ratelimit error ... ")
+        # time.sleep(60)
     
     if args.verbose:
         print(f"[Close-ended Multiple-choice Model Parser]")
@@ -755,6 +762,11 @@ def print_table(data_dict):
     print(table) 
                 
 def compute_metric(args):
+
+    if args.judge_model_id:
+        args.freeform_judge = str(args.judge_model_id)
+        args.multichoice_judge = str(args.judge_model_id)
+
     score_dict_ff = compute_metric_closeended_freeform(args)
     score_dict_mp = compute_metric_closeended_multichoice(args)
     
