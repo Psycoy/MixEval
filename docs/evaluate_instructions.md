@@ -59,3 +59,9 @@ OPENAI_API_VERSION=2023-07-01-preview
 
 ### Other APIs
 Specify the `--api_base_url` if you wish to use other api such as llama.cpp server.
+
+
+## Use Local Model Parser
+You can now use any language model on the huggingface to do the model parsing. Set the `--judge_model_id` when running `evaluate.py` or `compute_metrics.py` to specify the huggingface model id or the path to the huggingface local checkpoint.
+
+> You can configure the `OSJudgeCloseendFreeform` and `OSJudgeCloseendMultichoice` in `judge_freeform_parser.py` and `judge_multichoice_parser.py` to customize the judge model settings.

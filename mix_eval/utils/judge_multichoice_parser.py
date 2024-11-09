@@ -266,6 +266,7 @@ class OSJudgeCloseendMultichoice:
                 task['judge_response'] = completion
                 results.append(task)
 
-        if None in results:
-            raise ValueError("Some entries are not annotated due to errors in annotate_p, please inspect and retry.")
+        # for result in results:
+        #     if result['judge_response'] is None:
+        #         raise ValueError("Some entries are not annotated due to errors in annotate_p, please inspect and retry.")
         return results

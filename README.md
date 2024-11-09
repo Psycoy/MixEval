@@ -22,6 +22,8 @@
 <br>
 
 # ⚡ News
+[2024-11-09] Our evaluation suite now supports local model parsing/judge! Check [here](docs/evaluate_instructions.md#use-local-model-parser) for details! 
+
 [2024-10-20] MixEval-X is released! Checkout the [project page](https://mixeval-x.github.io/), [paper](https://arxiv.org/abs/2410.13754), and [github repo](https://github.com/Psycoy/MixEval-X/) to learn more about this real-world any-to-any benchmark!🌟
 
 [2024-09-27] MixEval is accepted to Neurips 2024. 
@@ -77,7 +79,7 @@ bash setup.sh
 ```
 MODEL_PARSER_API=<your openai api key>
 ```
-> The values in [Leaderboard](https://mixeval.github.io/#leaderboard) use `GPT-3.5-Turbo-0125` as the default model parser. Open-source model parsers will also be supported.
+> The values in [Leaderboard](https://mixeval.github.io/#leaderboard) use `GPT-3.5-Turbo-0125` as the default model parser. Open-source model parsers are also supported, check [here](docs/evaluate_instructions.md#use-local-model-parser) for details.
 
 > If you are using Azure or APIs for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
 
@@ -174,6 +176,8 @@ If you want to separately compute the scores, you should
 > You should set the `--api_parallel_num` properly according to your OpenAI user tier to avoid rate limits. In general, if you are a Tier-5 user, you can set `--api_parallel_num` to 100 or more to parse results in **30 seconds**.
 
 > If you are using Azure or APIs for model parser, check [here](docs/evaluate_instructions.md#use-other-apis-for-model-parser).
+
+> Open-source model parsers are also supported, check [here](docs/evaluate_instructions.md#use-local-model-parser) for details.
 
 > If you are parsing base models' responses, set the `--extract_base_model_response` flag to only retain the meaningful part in models' response to get more stablized parsing results.
 

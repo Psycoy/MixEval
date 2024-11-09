@@ -3015,18 +3015,6 @@
         ],
         "benchmark_name": "CommonsenseQA"
     },
-    "197": {
-        "problem_type": "multiple-choice",
-        "context": null,
-        "prompt": "Write a function to re-arrange the elements of the given array so that all negative elements appear before positive ones.",
-        "options": [
-            "def re_arrange_array(arr, n):\r\n  j=0\r\n  for i in range(0, n):\r\n    if (arr[i] < 0):\r\n      temp = arr[i]\r\n      arr[i] = arr[j]\r\n      arr[j] = temp\r\n      j = j + 1\r\n  return arr"
-        ],
-        "target": [
-            0
-        ],
-        "benchmark_name": "MBPP"
-    },
     "198": {
         "problem_type": "multiple-choice",
         "context": null,
@@ -4373,18 +4361,6 @@
             1
         ],
         "benchmark_name": "HellaSwag"
-    },
-    "287": {
-        "problem_type": "multiple-choice",
-        "context": null,
-        "prompt": "\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n",
-        "options": [
-            "    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n"
-        ],
-        "target": [
-            0
-        ],
-        "benchmark_name": "HumanEval"
     },
     "288": {
         "problem_type": "multiple-choice",
@@ -6524,18 +6500,6 @@
             2
         ],
         "benchmark_name": "MMLU"
-    },
-    "427": {
-        "problem_type": "multiple-choice",
-        "context": null,
-        "prompt": "Write a function to compute the sum of digits of each number of a given list.",
-        "options": [
-            "def sum_of_digits(nums):\r\n    return sum(int(el) for n in nums for el in str(n) if el.isdigit())"
-        ],
-        "target": [
-            0
-        ],
-        "benchmark_name": "MBPP"
     },
     "428": {
         "problem_type": "multiple-choice",
@@ -18682,18 +18646,6 @@
         ],
         "benchmark_name": "PIQA"
     },
-    "1221": {
-        "problem_type": "multiple-choice",
-        "context": null,
-        "prompt": "Write a function that matches a string that has an a followed by two to three 'b'.",
-        "options": [
-            "import re\r\ndef text_match_two_three(text):\r\n        patterns = 'ab{2,3}'\r\n        if re.search(patterns,  text):\r\n                return 'Found a match!'\r\n        else:\r\n                return('Not matched!')"
-        ],
-        "target": [
-            0
-        ],
-        "benchmark_name": "MBPP"
-    },
     "1222": {
         "problem_type": "multiple-choice",
         "context": "Addison ate their bread and drank a nice glass of water with the bread.",
@@ -23880,18 +23832,6 @@
             1
         ],
         "benchmark_name": "HellaSwag"
-    },
-    "1564": {
-        "problem_type": "multiple-choice",
-        "context": null,
-        "prompt": "\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n",
-        "options": [
-            "    import re\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence[0:2] == 'I ' for sentence in sentences)\n"
-        ],
-        "target": [
-            0
-        ],
-        "benchmark_name": "HumanEval"
     },
     "1565": {
         "problem_type": "multiple-choice",
