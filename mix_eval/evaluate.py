@@ -82,6 +82,12 @@ def parse_args():
         help="Batch size for evaluation."
         )
     parser.add_argument(
+        "--batch_size_judge", 
+        type=int, 
+        default=1, 
+        help="Batch size for judge model."
+        )
+    parser.add_argument(
         "--max_gpu_memory", 
         type=str, 
         default=None, 

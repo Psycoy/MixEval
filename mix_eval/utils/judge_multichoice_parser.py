@@ -161,7 +161,7 @@ class OSJudgeCloseendMultichoice:
         self.JUDGE = args.multichoice_judge
         self.FIX_INTERVAL_SECOND = 0
         self.MAX_NEW_TOKENS = 256
-        self.BATCH_SIZE = args.batch_size  # Define batch size
+        self.BATCH_SIZE = args.batch_size_judge  # Define batch size
 
         # Load the Hugging Face model and tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(self.JUDGE)

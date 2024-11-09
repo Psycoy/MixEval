@@ -58,6 +58,12 @@ def parse_args():
         help="Path to local judge llm model, if set, local judge model is used and not only api."
         )
     parser.add_argument(
+        "--batch_size_judge", 
+        type=int, 
+        default=1, 
+        help="Batch size for judge model."
+        )
+    parser.add_argument(
         "--model_response_dir", 
         type=str, 
         default="mix_eval/data/model_responses/", 
@@ -797,6 +803,8 @@ def compute_metric(args):
 
             tmp_score_dict_model[k] = score_dict_ff[model].get(k, 0) * (sd_ff_l/(sd_ff_l+sd_mp_l)) + score_dict_mp[model].get(k, 0) * (sd_mp_l/(sd_ff_l+sd_mp_l))
 
+        tmp_score_dict_model = {"overall": tmp_score_dict_model["overall"], **tmp_score_dict_model}
+        
         score_dict[model] = tmp_score_dict_model
         with open(os.path.join(score_dir, "score.json"), "w") as f:
             f.write(json.dumps(tmp_score_dict_model, indent=4) + "\n")
