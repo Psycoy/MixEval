@@ -3,7 +3,7 @@
 /mix_eval/data/test/
 /mix_eval/data/model_responses/*
 !mix_eval/data/model_responses/gemma_11_7b_instruct
-/mix_eval/eval_scri
+/mix_eval/eval_scripts/
 build_dynamic_benchmark_version_control.sh
 .env
 .vscode
