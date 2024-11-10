@@ -3,6 +3,7 @@ import time
 import random
 import os
 from dotenv import load_dotenv
+import torch
 
 from concurrent.futures import ThreadPoolExecutor
 from openai import OpenAI, AzureOpenAI
@@ -11,6 +12,7 @@ from httpx import Timeout
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from mix_eval.prompts.judge_prompts import gpt_judge_for_closeended_multiplechoice
 from mix_eval.utils.common_utils import extract_basemodel_response_2e
+from mix_eval.utils.common_utils import get_gpu_memory
 
 ########################ChatGPT########################
 class ChatGPTJudgeCloseendMultichoice:
@@ -153,6 +155,8 @@ class OSJudgeCloseendMultichoice:
     def __init__(self, args):
         """
         Initialize the OSJudgeCloseendMultichoice class.
+        
+        ***Tested models: Qwen/Qwen2.5-7B-Instruct***
 
         Args:
             args: Argument parser object containing necessary parameters.
@@ -160,13 +164,53 @@ class OSJudgeCloseendMultichoice:
         self.args = args
         self.JUDGE = args.multichoice_judge
         self.FIX_INTERVAL_SECOND = 0
-        self.MAX_NEW_TOKENS = 256
+        self.MAX_NEW_TOKENS = 1024
         self.BATCH_SIZE = args.batch_size_judge  # Define batch size
+        self.attn_implementation = 'flash_attention_2'
+        self.trust_remote_code = True
+        self.use_fast_tokenizer = False
+        self.padding_side = "left"
 
         # Load the Hugging Face model and tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(self.JUDGE)
-        self.tokenizer.padding_side = "left"
-        self.model = AutoModelForCausalLM.from_pretrained(self.JUDGE, device_map = 'cuda')
+        self.model = self.build_model()
+        self.model_max_len = self.model.config.max_position_embeddings
+        self.tokenizer = self.build_tokenizer()
+        self.tokenizer.padding_side="left"
+        
+    def build_model(self):
+        num_gpus = torch.cuda.device_count()
+        kwargs = {}
+        kwargs["device_map"] = "auto"
+        if self.args.max_gpu_memory_judge is None:
+            kwargs[
+                "device_map"
+            ] = "sequential"  # This is important for not the same VRAM sizes
+            available_gpu_memory = get_gpu_memory(num_gpus)
+            kwargs["max_memory"] = {
+                i: str(int(available_gpu_memory[i] * 0.85)) + "GiB"
+                for i in range(num_gpus)
+            }
+        else:
+            kwargs["max_memory"] = {i: self.args.max_gpu_memory_judge for i in range(num_gpus)}
+        
+        if self.attn_implementation is not None:
+            kwargs["attn_implementation"] = self.attn_implementation
+            
+        model = AutoModelForCausalLM.from_pretrained(
+            self.JUDGE,
+            trust_remote_code=self.trust_remote_code,
+            **kwargs
+        ).eval()
+        return model
+    
+    def build_tokenizer(self):
+        tokenizer = AutoTokenizer.from_pretrained(
+            self.JUDGE,
+            model_max_length=self.model_max_len,
+            padding_side=self.padding_side,
+            use_fast=self.use_fast_tokenizer,
+            trust_remote_code=self.trust_remote_code,)
+        return tokenizer
 
     def format_prompts(self, inputs):
         """
@@ -203,7 +247,6 @@ class OSJudgeCloseendMultichoice:
         outputs = self.model.generate(**inputs, max_new_tokens=self.MAX_NEW_TOKENS)
         outputs = outputs[:,inputs["input_ids"].shape[1]:]
         completions = [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
-        # time.sleep(self.FIX_INTERVAL_SECOND)
         return completions
 
     def annotate_p(self, task):

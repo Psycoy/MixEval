@@ -3,6 +3,7 @@ import time
 import random
 import os
 from dotenv import load_dotenv
+import torch
 
 from concurrent.futures import ThreadPoolExecutor
 from openai import OpenAI, AzureOpenAI
@@ -12,6 +13,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from mix_eval.prompts.judge_prompts import gpt_judge_for_closeended_freeform
 from mix_eval.utils.common_utils import extract_basemodel_response_3e
+from mix_eval.utils.common_utils import get_gpu_memory
 
 ########################ChatGPT########################
 class ChatGPTJudgeCloseendFreeform:
@@ -152,20 +154,61 @@ class OSJudgeCloseendFreeform:
     def __init__(self, args):
         """
         Initialize the OSJudgeCloseendFreeform class.
+        
+        ***Tested models: Qwen/Qwen2.5-7B-Instruct***
 
         Args:
             args: Argument parser object containing necessary parameters.
         """
         self.args = args
         self.JUDGE = args.freeform_judge
-        self.FIX_INTERVAL_SECOND = 0
-        self.MAX_NEW_TOKENS = 256
+        self.MAX_NEW_TOKENS = 1024
         self.BATCH_SIZE = args.batch_size_judge  # Define batch size
+        self.attn_implementation = 'flash_attention_2'
+        self.trust_remote_code = True
+        self.use_fast_tokenizer = False
+        self.padding_side = "left"
 
         # Load the Hugging Face model and tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(self.JUDGE)
+        self.model = self.build_model()
+        self.model_max_len = self.model.config.max_position_embeddings
+        self.tokenizer = self.build_tokenizer()
         self.tokenizer.padding_side="left"
-        self.model = AutoModelForCausalLM.from_pretrained(self.JUDGE, device_map = 'cuda')
+        
+    def build_model(self):
+        num_gpus = torch.cuda.device_count()
+        kwargs = {}
+        kwargs["device_map"] = "auto"
+        if self.args.max_gpu_memory_judge is None:
+            kwargs[
+                "device_map"
+            ] = "sequential"  # This is important for not the same VRAM sizes
+            available_gpu_memory = get_gpu_memory(num_gpus)
+            kwargs["max_memory"] = {
+                i: str(int(available_gpu_memory[i] * 0.85)) + "GiB"
+                for i in range(num_gpus)
+            }
+        else:
+            kwargs["max_memory"] = {i: self.args.max_gpu_memory_judge for i in range(num_gpus)}
+        
+        if self.attn_implementation is not None:
+            kwargs["attn_implementation"] = self.attn_implementation
+            
+        model = AutoModelForCausalLM.from_pretrained(
+            self.JUDGE,
+            trust_remote_code=self.trust_remote_code,
+            **kwargs
+        ).eval()
+        return model
+    
+    def build_tokenizer(self):
+        tokenizer = AutoTokenizer.from_pretrained(
+            self.JUDGE,
+            model_max_length=self.model_max_len,
+            padding_side=self.padding_side,
+            use_fast=self.use_fast_tokenizer,
+            trust_remote_code=self.trust_remote_code,)
+        return tokenizer
 
     def format_prompts(self, inputs):
         """
@@ -194,25 +237,15 @@ class OSJudgeCloseendFreeform:
             List[str]: List of decoded completions.
         """
         prompt_texts = [self.format_prompts(inputs) for inputs in batch_inputs]
-        print("prompt texts")
-        print(prompt_texts)
-        print("batch_inputs")
-        print(batch_inputs)
         if not self.tokenizer.pad_token:
             self.tokenizer.pad_token = self.tokenizer.eos_token
         inputs = self.tokenizer.batch_encode_plus(prompt_texts, return_tensors='pt', padding=True, truncation=True)
         inputs = {k:v.cuda() for k,v in inputs.items()}
-        print("inputs")
-        print(inputs)
-        print({k:v.shape for k,v in inputs.items()})
  
         outputs = self.model.generate(**inputs, max_new_tokens=self.MAX_NEW_TOKENS)
         outputs = outputs[:,inputs["input_ids"].shape[1]:]
-        print("outputs")
-        print(outputs)
 
         completions = [self.tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
-        # time.sleep(self.FIX_INTERVAL_SECOND)
         return completions
 
     def annotate_p(self, task):    

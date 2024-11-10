@@ -96,6 +96,14 @@ def parse_args():
         "so you can use longer context lengths or larger batch sizes."
         )
     parser.add_argument(
+        "--max_gpu_memory_judge", 
+        type=str, 
+        default=None, 
+        help="The maximum memory per GPU for storing judge weights. "
+        "Set this properly will allocate more memory for activations, "
+        "so you can use longer context lengths or larger batch sizes."
+        )
+    parser.add_argument(
         "--api_parallel_num", 
         type=int, 
         default=100, 
